@@ -1,0 +1,1 @@
+This directory contains the source .adoc (Asciidoc) files that will be used to generate PDF and HTML documentation
