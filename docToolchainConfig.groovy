@@ -14,7 +14,7 @@ inputFiles = [
         //[file: 'doctoolchain_demo.adoc',       formats: ['html','pdf']],
         //[file: 'arc42-template.adoc',    formats: ['html','pdf']],
         /** inputFiles **/
-        [file: '*.adoc', formats: ['html', 'pdf']],
+        [file: 'index.adoc', formats: ['html', 'pdf']],
 ]
 
 //folders in which asciidoc will find images.

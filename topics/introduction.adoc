@@ -1,0 +1,83 @@
+== Introduction to geoCML
+
+geoCML is a Containerized, Multi-paradigm, Lightweight deployment pattern for geographic information systems running locally or in the cloud. geoCML deployments package best-in-class open-source GIS software including QGIS and PostGIS allowing you to quickly go to production. In this topic, you will learn how geoCML deployments work and be able to make an informed decision about whether geoCML is a good choice your needs.
+
+=== How does geoCML work?
+
+geoCML deployments include four containerized microservices: geocml-desktop (the primary user entrypoint), geocml-server (the secondary user entrypoint), geocml-postgres, and geocml-task-scheduler (often abbreviated as gTS). Each service can communicate with each other via an internal network called geocml-network. Once deployed as a geoCML instance, you can begin using geoCML to complete GIS workflows. By design, each geoCML instance should host only one project/dataset. Multiple datasets should be hosted across multiple geoCML instances. The following diagram outlines the system architecture for geoCML deployments and the paths of communication between services and clients.
+
+[ditaa]
+....
+                                                                 +--------------------+                                                                                 
+                                                                 |   Client Machine   |<-------------------------------------+                                          
+                                                                 |                    |                                      |                                          
+                                                                 +--------------------+                                      |                                          
+                                                                            ^                                                |                                          
+                                                                            |                                                |                                          
+                                                                            v                                                |                                          
+                                                                 +--------------------+                                      |                                          
+         +---------------------------+                           |   geocml-desktop   |                                      |                                          
+         |   geocml-task-scheduler   |                           +--------------------+                                      |                                          
++------->+---------------------------+                           |     VNC Server     |                                      |                                          
+|        |geoCML Task Scheduler (gTS)|<------------------------->|  Desktop GIS Apps  |<--------------+                      |                                          
+|        |      Ubuntu Linux         |                           |    XFCE4 Desktop   |               |                      |                                          
+|        +---------------------------+                           |     File System    |               |                      |                                          
+|                      ^                                         |    Ubuntu Linux    |               |                      |                                          
+|                      +-----------+                             +--------------------+               |                      |                                          
+|                                  |                                        ^                         |                      |                                          
+|                                  v                                        |                         |                      v                                          
+|                       +----------------------+                            |                         |            +-------------------+                                
+|                       |   geocml-postgres    |                            |                         |            |   geocml-server   |                                
+|                       +----------------------+<---------------------------+                         +----------->+-------------------+                                
+|                       |  +---------------+   |                                                                   |    QGIS Server    |                                
+|                       |  |   geocml_db   |   |                                                                   |      Django       |                                
+|                       |  +---------------+   |<----------------------------------------------------------------->| Apache Web Server |                                
+|                       | PostgreSQL + PostGIS |                                                                   |   Ubuntu Linux    |                                
+|                       |    Ubuntu Linux      |                                                                   +-------------------+                                
+|                       +----------------------+                                                                              ^                                         
+|                                                                                                                             |                                         
++-----------------------------------------------------------------------------------------------------------------------------+                                         
+....
+
+Specific documentation on each service is available for your reference.
+
+=== What can geoCML do?
+
+geoCML comes with a variety of features:
+
+- Common desktop GIS workflows
+- Common server GIS workflows
+- Routine database backups
+- PostgreSQL/PostGIS database hosting
+- Python support for writing custom gTS automation tasks
+- Persist information between containerized services
+- Use less space/resources than other GIS deployments
+- Cloud native GIS workflows
+- Multi user workflows (multiple users working within the GIS at at a time)
+
+=== What can geoCML _not_ do out of the box?
+
+geoCML is currently limited in the following areas:
+
+- Integration with ArcGIS proprietary deployments and extensions
+- Database version management
+- Backup domain values in a database
+- MySQL support, SQL Server support, etc (base deployments only support PostgreSQL/PostGIS)
+
+geoCML base deployments are customizable to fit your specific needs. You can customize your services however you'd like! If you would like to contribute to the development of geoCML, you can find the project on GitHub at https://github.com/geocml[github.com/geocml].
+
+=== Quick deployment guide
+
+_Get up and running with geoCML in under 15 minutes!_
+
+geoCML is multi-paradigm, offering a desktop GIS experience and a server GIS experience with a single deployment. You may host your geoCML instance locally or in the cloud, depending on your needs. 
+
+Before instantiating a geoCML deployment, you must have https://www.docker.com/[Docker] and https://docs.docker.com/compose/install/[Docker Compose] installed on the machine you want to host geoCML on. Once you have satisfied these conditions, please follow the following steps to deploy your geoCML instance.
+
+. Clone the geoCML source code from https://github.com/geocml/geocml-base-deployment[github.com/geocml/geocml-base-deployment]
+. Open a terminal and cd into the source code directory
+. Run `docker compose pull` to pull geoCML service images from the project's hosted container registry (optionally, run `docker compose build` to build the images on your machine; this is a requirement if you are modifying your images and have not pushed them to your own registry!)
+. Run `docker network create geocml-network`
+. Run `docker compose up -d` to bring up the instance 
+
+That's it! You can access geocml-desktop via {deployment host URL}:5901 using a VNC client, or geocml-server portal via {deployment host URL} using a web browser. Further configuration steps for each of these services are discussed in later topics.
