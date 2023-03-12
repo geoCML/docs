@@ -1,0 +1,6 @@
+:doctype: book
+:authors: Tristan Damron, Sean Marquez
+
+= geoCML v0.1.0 Documentation
+
+include::introduction.adoc[]
