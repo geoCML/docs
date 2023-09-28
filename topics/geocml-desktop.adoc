@@ -1,0 +1,33 @@
+== geoCML Desktop
+
+geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a full-serviced, immutible desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes install with the XFCE desktop environment. geoCML Desktop comes preinstalled with the following applications:
+
+- https://www.qgis.org/en/site/[QGIS]
+- https://wiki.gnome.org/Apps/Evince[Evince]
+
+Additional packages may be added to geoCML Desktop to fit your needs.
+
+=== Connecting to geoCML Desktop
+
+After deploying your geoCML base deployment, you can connect to geoCML Desktop with a VNC viewer application. The geoCML development team recommends using https://tigervnc.org/[TigerVNC]. You can connect to geoCML Desktop via {deployment host URL}:5901 within your VNC viewer application. geoCML Desktop is a password protected service; you will be required to provide a password before connecting to geoCML Desktop. By default, the password for geoCML Desktop is 'headless'.
+
+=== Using geoCML Desktop
+
+geoCML Desktop is designed to be a replacement for your typical desktop GIS experience. With the default geoCML Desktop, you can:
+- Use QGIS to prepare, aggregate, and visualize your GIS data
+- Open PDFs with Evince
+- Connect to the geocml-postgres service
+
+You can customize geoCML Desktop with additional functionality based on your needs.
+
+=== Customizing geoCML Desktop
+
+You may want to extend the default geocml-desktop service with additional applications or configurations that meet your needs. Customizing the geocml-desktop service involves updating the geocml-desktop Dockerfile. Open `geocml-base-deployment\Dockerfiles\Dockerfile.geocml-desktop` in your favorite text editor, and between the `Customize Container Here` and `End Customizations` comments, add your use-case specific geocml-desktop configuration steps.
+
+For more information on writing Dockerfiles, visit https://docs.docker.com/engine/reference/builder/
+
+=== Understanding the persistence layer
+
+geoCML Desktop features an immutible file system; the file system within the service cannot be changed directly. You may wonder how, then, are we do upload and change datasets contained within the geocml-desktop service? 
+
+The persistence layer is a _mutible_ directory shared between the geocml-desktop service and the deployment's host machine. geoCML Base Deployments use Docker to bind the host machine's local persistence layer to a persistence layer within the geocml-desktop service. This binding allows you to add files to the host machine's persistence layer and have them available within the geocml-desktop service. The persistence layer for a geoCML Base Deployment may also be available to other services within the deployment.
