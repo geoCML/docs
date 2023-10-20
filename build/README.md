@@ -1,1 +1,0 @@
-This directory contains output PDF and HTML documentation from docToolchain
