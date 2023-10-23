@@ -9,7 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout github repo
+        uses: actions/checkout@v4
 
       - name: Install Ansible
         run: sudo apt update && sudo apt -y install software-properties-common && sudo add-apt-repository --yes --update ppa:ansible/ansible && sudo apt install -y ansible && sudo rm -rf /var/lib/apt/lists/*
