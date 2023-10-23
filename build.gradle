@@ -9,8 +9,10 @@ plugins {
     id 'base'
 }
 
-def dtcwBinPath = "$projectDir/bin/dtcw"
+def adocSrc = "$projectDir/topics/index.adoc"
+def adocBuildDir = "$buildDir"
+def adocHtmlPath = "$adocBuildDir/index.html"
 
 tasks.register('generateHTML', Exec) {
-    commandLine "bash", "-c", "$dtcwBinPath generateHTML"
+    commandLine "bash", "-c", "asciidoctor $adocSrc -o $adocHtmlPath -r asciidoctor-diagram"
 }
