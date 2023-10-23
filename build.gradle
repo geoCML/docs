@@ -12,7 +12,12 @@ plugins {
 def adocSrc = "$projectDir/topics/index.adoc"
 def adocBuildDir = "$buildDir"
 def adocHtmlPath = "$adocBuildDir/index.html"
+def adocPdfPath = "$adocBuildDir/index.pdf"
 
 tasks.register('generateHTML', Exec) {
     commandLine "bash", "-c", "asciidoctor $adocSrc -o $adocHtmlPath -r asciidoctor-diagram"
+}
+
+tasks.register('generatePDF', Exec) {
+    commandLine "bash", "-c", "asciidoctor $adocSrc -o $adocPdfPath -r asciidoctor-diagram -r asciidoctor-pdf -b pdf"
 }
