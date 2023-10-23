@@ -12,7 +12,7 @@ exit /b
 #$env:DTC_SITETHEME = "https://....zip"
 
 $main_config_file = "docToolchainConfig.groovy"
-$version = "2.0.5"
+$version = "3.0.2"
 $dockerVersion = "2.1.0"
 $distribution_url = "https://github.com/docToolchain/docToolchain/releases/download/v$version/docToolchain-$version.zip"
 $env:DTCW_PROJECT_BRANCH = (git branch --show-current)
