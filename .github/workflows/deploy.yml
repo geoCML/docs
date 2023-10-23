@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build
-        run: ./bin/dtcw generateHTML
+        run: ./gradlew generateHTML
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
