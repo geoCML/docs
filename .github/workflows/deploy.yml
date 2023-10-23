@@ -27,4 +27,4 @@ jobs:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           # or github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./build/html5
+          publish_dir: ./build
