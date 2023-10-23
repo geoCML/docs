@@ -2,6 +2,10 @@ name: Build Docs w/ AsciiDoctor & deploy to GitHub Pages
 
 on:
   push:
+    paths-ignore:
+      - '.gitignore'
+      - 'LICENSE.md'
+      - 'README.md'
     branches:
       - main
 
