@@ -1,4 +1,4 @@
-name: Build Docs w/ docToolchain & deploy to GitHub Pages
+name: Build Docs w/ AsciiDoctor & deploy to GitHub Pages
 
 on:
   push:
