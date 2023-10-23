@@ -11,7 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build
+      - name: Install Ansible
+        run: apt update && apt -y install software-properties-common && add-apt-repository --yes --update ppa:ansible/ansible && apt install -y ansible && rm -rf /var/lib/apt/lists/*
+
+      - name: Run Ansible commands
+        run: ansible-galaxy install -r requirements.yaml && ansible-playbook -i,localhost playbook.yaml --tags "install_generator_asciidoctor" && rm -f ./*.yaml
+
+      - name: Build docs
         run: ./gradlew generateHTML
 
       - name: Deploy
