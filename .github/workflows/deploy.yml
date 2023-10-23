@@ -16,7 +16,7 @@ jobs:
         run: sudo apt update && sudo apt -y install software-properties-common && sudo add-apt-repository --yes --update ppa:ansible/ansible && sudo apt install -y ansible && sudo rm -rf /var/lib/apt/lists/*
 
       - name: Run Ansible commands
-        run: ansible-playbook -i,localhost playbook.yaml --tags "install_generator_asciidoctor" && rm -f ./*.yaml
+        run: sudo ansible-playbook -i,localhost playbook.yaml --tags "install_generator_asciidoctor" && rm -f ./*.yaml
 
       - name: Build docs
         run: ./gradlew generateHTML
