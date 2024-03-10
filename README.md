@@ -8,8 +8,14 @@ You may choose to extend the default geoCML documentation (distributed with all 
 
 ## How to build your documentation
 
+Requirements:
+
+ - asciidoctor
+ - asciidoctor-pdf
+ - asciidoctor-diagram
+
 *nix / Bash:
-> Run `./bin/dtcw generateHTML generatePDF`
+> Run `./grawdlew generateHTML generatePDF`
 
 Windows:
-> Run `"./bin/dtcw.bat" generateHTML generatePDF`
+> Run `"./gradlew.bat" generateHTML generatePDF`

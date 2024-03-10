@@ -1,0 +1,34 @@
+name: Build Docs w/ AsciiDoctor & deploy to GitHub Pages
+
+on:
+  push:
+    paths-ignore:
+      - '.gitignore'
+      - 'LICENSE.md'
+      - 'README.md'
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout github repo
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: sudo apt update && sudo apt -y install software-properties-common && sudo add-apt-repository --yes --update ppa:ansible/ansible && sudo apt install -y ansible && sudo rm -rf /var/lib/apt/lists/*
+
+      - name: Run Ansible commands
+        run: sudo ansible-playbook -i,localhost playbook.yaml --tags "install_generator_asciidoctor" && rm -f ./*.yaml
+
+      - name: Build docs
+        run: ./gradlew generateHTML
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          # or github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./build
