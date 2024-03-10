@@ -1,5 +1,6 @@
 :doctype: book
 :authors: Tristan Damron, Sean Marquez
+:toc:
 
 = geoCML v0.1.0 Documentation
 
