@@ -5,3 +5,5 @@
 = geoCML v0.1.0 Documentation
 
 include::introduction.adoc[]
+
+include::geocml-desktop.adoc[]
