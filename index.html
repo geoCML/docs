@@ -462,6 +462,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_understanding_the_persistence_layer">Understanding the persistence layer</a></li>
 </ul>
 </li>
+<li><a href="#_geocml_postgres">geoCML Postgres</a>
+<ul class="sectlevel1">
+<li><a href="#_configuring_geocml_postgres">Configuring geoCML Postgres</a>
+<ul class="sectlevel2">
+<li><a href="#_docker_configuration">Docker Configuration</a></li>
+<li><a href="#_ansible_configuration">Ansible Configuration</a></li>
+</ul>
+</li>
+<li><a href="#_accessing_your_database">Accessing your database</a></li>
+<li><a href="#_current_limitations_of_the_geocml_postgres_service">Current limitations of the geoCML Postgres service</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -641,10 +653,91 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
+<h1 id="_geocml_postgres" class="sect0">geoCML Postgres</h1>
+<div class="openblock partintro">
+<div class="content">
+geoCML deploys a micro-service container with a PostGIS enabled Postgres database by default for your project. This is the primary data store for a geoCML deployment.
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_geocml_postgres">Configuring geoCML Postgres</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>geoCML Postgres can be fully configured to suit the needs of your use case. geoCML Postgres has a two step configuration process: Dockerfile configuration, and Ansible configuration.</p>
+</div>
+<div class="sect2">
+<h3 id="_docker_configuration">Docker Configuration</h3>
+<div class="paragraph">
+<p>You can use Docker to install packages to your geoCML Postgres service deployment. Open geocml-base-deployment\Dockerfiles\Dockerfile.geocml-postgres in your favorite text editor, and between the Customize Container Here and End Customizations comments, add your use-case specific geocml-postgres configuration steps.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ansible_configuration">Ansible Configuration</h3>
+<div class="paragraph">
+<p>You can use Ansible to automate advanced, tedious configuration workflows. By default, geoCML Postgres uses Ansible to automate configuring your database. You can further customize your advanced configurations. Open geocml-base-deployment/ansible-playbooks/geocml-postgres-playbook.yaml</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_accessing_your_database">Accessing your database</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>geoCML Postgres creates a database named geocml_db, which is the primary datastore for your geoCML project. <em>Do not change the name of this database!</em> You can access your database in several ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>via geoCML Desktop and QGIS (over the internal geocml-network)</p>
+</li>
+<li>
+<p>via a PostgreSQL data explorer (over port {deployment host URL}:5432)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The default credentials for accessing your database are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Username: geocml</p>
+</li>
+<li>
+<p>Password: geocml</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>It is strongly recommended that you change your default geocml_db user password before going to production!</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_current_limitations_of_the_geocml_postgres_service">Current limitations of the geoCML Postgres service</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In geoCML v0.1.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Raster datasets,</p>
+</li>
+<li>
+<p>Domain fields</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Support for these data will be added to geoCML Postgres in a future release of geoCML.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-03-10 03:44:00 UTC
+Last updated 2024-06-15 18:47:48 UTC
 </div>
 </div>
 </body>
