@@ -28,6 +28,6 @@ For more information on writing Dockerfiles, visit https://docs.docker.com/engin
 
 === Understanding the persistence layer
 
-geoCML Desktop features an immutible file system; the file system within the service cannot be changed directly. You may wonder how, then, are we do upload and change datasets contained within the geocml-desktop service? 
+geoCML Desktop features an immutible file system; the file system within the service cannot be changed directly. You may wonder how, then, are we do upload and change datasets contained within the geocml-desktop service?
 
 The persistence layer is a _mutible_ directory shared between the geocml-desktop service and the deployment's host machine. geoCML Base Deployments use Docker to bind the host machine's local persistence layer to a persistence layer within the geocml-desktop service. This binding allows you to add files to the host machine's persistence layer and have them available within the geocml-desktop service. The persistence layer for a geoCML Base Deployment may also be available to other services within the deployment.
