@@ -1,0 +1,35 @@
+= geoCML Server
+
+geoCML deploys a micro-service container a QGIS Server instance, an Apache web server, as well as a Django application, called geoCML Server. This micro-service is responsible for implementing web and server GIS paradigms for your project.
+
+== Configuring geoCML Server
+
+geoCML Server can be fully configured to suit the needs of your use case. geoCML Server has a two step configuration process: Dockerfile configuration, and Ansible configuration. 
+
+=== Docker Configuration
+
+You can use Docker to install packages to your geoCML Server service deployment. Open geocml-base-deployment\Dockerfiles\Dockerfile.geocml-server in your favorite text editor, and between the Customize Container Here and End Customizations comments, add your use-case specific geocml-server configuration steps.
+
+=== Ansible Configuration
+
+You can use Ansible to automate advanced, tedious configuration workflows. By default, geoCML Server uses Ansible to automate configuring your Apache and QGIS Server. You can further customize your advanced configurations. Open geocml-base-deployment/ansible-playbooks/geocml-server-playbook.yaml
+
+== Accessing geoCML Server via the web
+
+geoCML Portal is accessible via {deployment host URL}. geoCML Portal is a web application frontend for geoCML Server. geoCML Portal can also act as a dashboard for your entire deployment. It features:
+
+- a description of your project,
+- copyright claims for your project's data,
+- an optional hosted Leaflet web map,
+- WMS connection information,
+- WFS connection information,
+- WCS connection information,
+- geoCML Desktop VNC URL,
+- geocml_db connection information,
+- a Deployment Health Dashboard showing the operational status of each of your deployment's services.
+
+You can configure geoCML Portal using the portal-config.yaml file found in your deployment's persistence layer.
+
+== Accessing geoCML Server via an API
+
+geoCML Server exposes all functionality for QGIS Server via Apache. Learn more about QGIS Server here: https://docs.qgis.org/3.34/en/docs/server_manual/index.html

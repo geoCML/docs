@@ -9,3 +9,5 @@ include::introduction.adoc[]
 include::geocml-desktop.adoc[]
 
 include::geocml-postgres.adoc[]
+
+include::geocml-server.adoc[]
