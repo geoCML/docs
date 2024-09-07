@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
 <meta name="author" content="Tristan Damron, Sean Marquez">
-<title>geoCML v0.1.0 Documentation</title>
+<title>geoCML v0.2.0 Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book">
 <div id="header">
-<h1>geoCML v0.1.0 Documentation</h1>
+<h1>geoCML v0.2.0 Documentation</h1>
 <div class="details">
 <span id="author" class="author">Tristan Damron, Sean Marquez</span><br>
 </div>
@@ -458,32 +458,37 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_connecting_to_geocml_desktop">Connecting to geoCML Desktop</a></li>
 <li><a href="#_using_geocml_desktop">Using geoCML Desktop</a></li>
-<li><a href="#_customizing_geocml_desktop">Customizing geoCML Desktop</a></li>
+<li><a href="#_configuring_geocml_desktop">Configuring geoCML Desktop</a></li>
 <li><a href="#_understanding_the_persistence_layer">Understanding the persistence layer</a></li>
 </ul>
 </li>
 <li><a href="#_geocml_postgres">geoCML Postgres</a>
-<ul class="sectlevel1">
-<li><a href="#_configuring_geocml_postgres">Configuring geoCML Postgres</a>
 <ul class="sectlevel2">
-<li><a href="#_docker_configuration">Docker Configuration</a></li>
-<li><a href="#_ansible_configuration">Ansible Configuration</a></li>
-</ul>
-</li>
+<li><a href="#_configuring_geocml_postgres">Configuring geoCML Postgres</a></li>
 <li><a href="#_accessing_your_database">Accessing your database</a></li>
 <li><a href="#_current_limitations_of_the_geocml_postgres_service">Current limitations of the geoCML Postgres service</a></li>
 </ul>
 </li>
 <li><a href="#_geocml_server">geoCML Server</a>
-<ul class="sectlevel1">
-<li><a href="#_configuring_geocml_server">Configuring geoCML Server</a>
 <ul class="sectlevel2">
-<li><a href="#_docker_configuration_2">Docker Configuration</a></li>
-<li><a href="#_ansible_configuration_2">Ansible Configuration</a></li>
-</ul>
-</li>
+<li><a href="#_configuring_geocml_server">Configuring geoCML Server</a></li>
 <li><a href="#_accessing_geocml_server_via_the_web">Accessing geoCML Server via the web</a></li>
 <li><a href="#_accessing_geocml_server_via_an_api">Accessing geoCML Server via an API</a></li>
+</ul>
+</li>
+<li><a href="#_geocml_task_scheduler_gts">geoCML Task Scheduler (gTS)</a>
+<ul class="sectlevel2">
+<li><a href="#_configuring_geocml_task_scheduler">Configuring geoCML Task Scheduler</a></li>
+<li><a href="#_understanding_dbbackups">Understanding DBBackups</a></li>
+<li><a href="#_writing_tasks">Writing Tasks</a></li>
+</ul>
+</li>
+<li><a href="#_tabor">Tabor</a>
+<ul class="sectlevel2">
+<li><a href="#_downloading_and_installing_tabor">Downloading and Installing Tabor</a></li>
+<li><a href="#_command_line_usage">Command Line Usage</a></li>
+<li><a href="#_supported_geometry_types">Supported Geometry Types</a></li>
+<li><a href="#_supported_field_types">Supported Field Types</a></li>
 </ul>
 </li>
 </ul>
@@ -499,29 +504,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_how_does_geocml_work">How does geoCML work?</h3>
 <div class="paragraph">
-<p>geoCML deployments include four containerized microservices: geocml-desktop (the primary user entrypoint), geocml-server (the secondary user entrypoint), geocml-postgres, and geocml-task-scheduler (often abbreviated as gTS). Each service can communicate with each other via an internal network called geocml-network. Once deployed as a geoCML instance, you can begin using geoCML to complete GIS workflows. By design, each geoCML instance should host only one project/dataset. Multiple datasets should be hosted across multiple geoCML instances. The following diagram outlines the system architecture for geoCML deployments and the paths of communication between services and clients.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="diag-ditaa-md5-37b473cefa3494234033b589255bdc8f.png" alt="Diagram" width="1400" height="462">
-</div>
-</div>
-<div class="paragraph">
-<p>Specific documentation on each service is available for your reference.</p>
+<p>geoCML deployments include four containerized microservices: geocml-desktop (the primary user entrypoint), geocml-server (the secondary user entrypoint), geocml-postgres (the primary data store), and geocml-task-scheduler (often abbreviated as gTS). Each service can communicate with each other via an internal network called geocml-network. Once deployed as a geoCML instance, you can begin using geoCML to complete GIS workflows. By design, each geoCML instance should host only one project/dataset. Multiple datasets should be hosted across multiple geoCML instances. Specific documentation on each service is available for your reference.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_what_can_geocml_do">What can geoCML do?</h3>
 <div class="paragraph">
-<p>geoCML comes with a variety of features:</p>
+<p>geoCML deployments come out of the box with a variety of features:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Common desktop GIS workflows</p>
+<p>Desktop GIS workflows</p>
 </li>
 <li>
-<p>Common server GIS workflows</p>
+<p>Cloud native server GIS workflows</p>
 </li>
 <li>
 <p>Routine database backups</p>
@@ -533,16 +530,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Python support for writing custom gTS automation tasks</p>
 </li>
 <li>
-<p>Persist information between containerized services</p>
+<p>Persist information between containerized services via the persistence-layer directory</p>
 </li>
 <li>
-<p>Use less space/resources than other GIS deployments</p>
-</li>
-<li>
-<p>Cloud native GIS workflows</p>
-</li>
-<li>
-<p>Multi user workflows (multiple users working within the GIS at at a time)</p>
+<p>Use less space/resources than other enterprise GIS deployments</p>
 </li>
 </ul>
 </div>
@@ -564,6 +555,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Backup domain values in a database</p>
 </li>
 <li>
+<p>Support for storing raster data in geocml-postgres</p>
+</li>
+<li>
 <p>MySQL support, SQL Server support, etc (base deployments only support PostgreSQL/PostGIS)</p>
 </li>
 </ul>
@@ -578,10 +572,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><em>Get up and running with geoCML in under 15 minutes!</em></p>
 </div>
 <div class="paragraph">
-<p>geoCML is multi-paradigm, offering a desktop GIS experience and a server GIS experience with a single deployment. You may host your geoCML instance locally or in the cloud, depending on your needs.</p>
+<p>geoCML deployments are multi-paradigm, offering a desktop GIS experience and a server GIS experience with a single deployment. You may host your geoCML instance locally or in the cloud, depending on your needs.</p>
 </div>
 <div class="paragraph">
-<p>Before instantiating a geoCML deployment, you must have <a href="https://www.docker.com/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a> installed on the machine you want to host geoCML on. Once you have satisfied these conditions, please follow the following steps to deploy your geoCML instance.</p>
+<p>Before instantiating a geoCML deployment, you must have <a href="https://www.docker.com/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a> installed on the machine you want to host geoCML on. You do not need any additional GIS software installed on the machine. Once you have satisfied these conditions, please follow the following steps to deploy your geoCML instance.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -603,7 +597,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ol>
 </div>
 <div class="paragraph">
-<p>That&#8217;s it! You can access geocml-desktop via {deployment host URL}:5901 using a VNC client, or geocml-server portal via {deployment host URL} using a web browser. Further configuration steps for each of these services are discussed in later topics.</p>
+<p>That&#8217;s it! You can access geoCML Desktop via {deployment host URL}:10000 or geoCML Server portal via {deployment host URL}:80 using a web browser. Further configuration steps for each of these services are discussed in later topics.</p>
 </div>
 </div>
 </div>
@@ -612,88 +606,95 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_geocml_desktop">geoCML Desktop</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a full-serviced, immutible desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes install with the XFCE desktop environment. geoCML Desktop comes preinstalled with the following applications:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://www.qgis.org/en/site/">QGIS</a></p>
-</li>
-<li>
-<p><a href="https://wiki.gnome.org/Apps/Evince">Evince</a></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Additional packages may be added to geoCML Desktop to fit your needs.</p>
+<p>geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with <a href="https://www.qgis.org/en/site/">QGIS</a>, a best-in-class open-source desktop GIS application.</p>
 </div>
 <div class="sect2">
 <h3 id="_connecting_to_geocml_desktop">Connecting to geoCML Desktop</h3>
 <div class="paragraph">
-<p>After deploying your geoCML base deployment, you can connect to geoCML Desktop with a VNC viewer application. The geoCML development team recommends using <a href="https://tigervnc.org/">TigerVNC</a>. You can connect to geoCML Desktop via {deployment host URL}:5901 within your VNC viewer application. geoCML Desktop is a password protected service; you will be required to provide a password before connecting to geoCML Desktop. By default, the password for geoCML Desktop is 'headless'.</p>
+<p>After instantiating your geoCML deployment, you can connect to geoCML Desktop via a web browser at {deployment host URL}:10000.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_using_geocml_desktop">Using geoCML Desktop</h3>
 <div class="paragraph">
-<p>geoCML Desktop is designed to be a replacement for your typical desktop GIS experience. With the default geoCML Desktop, you can:
-- Use QGIS to prepare, aggregate, and visualize your GIS data
-- Open PDFs with Evince
-- Connect to the geocml-postgres service</p>
+<p>geoCML Desktop is designed to be a replacement for your typical desktop GIS experience. With the default geoCML Desktop, you can:</p>
 </div>
-<div class="paragraph">
-<p>You can customize geoCML Desktop with additional functionality based on your needs.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use QGIS to prepare, aggregate, and visualize your GIS data</p>
+</li>
+<li>
+<p>Configure geoCML Server Portal</p>
+</li>
+<li>
+<p>Connect to the geocml-postgres service</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_customizing_geocml_desktop">Customizing geoCML Desktop</h3>
+<h3 id="_configuring_geocml_desktop">Configuring geoCML Desktop</h3>
 <div class="paragraph">
-<p>You may want to extend the default geocml-desktop service with additional applications or configurations that meet your needs. Customizing the geocml-desktop service involves updating the geocml-desktop Dockerfile. Open <code>geocml-base-deployment\Dockerfiles\Dockerfile.geocml-desktop</code> in your favorite text editor, and between the <code>Customize Container Here</code> and <code>End Customizations</code> comments, add your use-case specific geocml-desktop configuration steps.</p>
+<p>You may want to extend the default geocml-desktop service with additional applications or configurations that meet your needs.
+geoCML Destkop has a two step configuration process: Dockerfile configuration, and Ansible configuration.</p>
 </div>
+<div class="sect3">
+<h4 id="_docker_configuration">Docker Configuration</h4>
 <div class="paragraph">
-<p>For more information on writing Dockerfiles, visit <a href="https://docs.docker.com/engine/reference/builder/" class="bare">https://docs.docker.com/engine/reference/builder/</a></p>
+<p>You can use Docker to install packages to geoCML Desktop. Open geocml-base-deployment\Dockerfiles\Dockerfile.geocml-desktop in your favorite text editor, and between the Customize Container Here and End Customizations comments, add your use-case specific geoCML Desktop configuration steps.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ansible_configuration">Ansible Configuration</h4>
+<div class="paragraph">
+<p>You can use Ansible to automate advanced, tedious configuration workflows. By default, geoCML Desktop uses Ansible to automate configuring your database. You can further customize your advanced configurations. Open geocml-base-deployment/ansible-playbooks/geocml-desktop-playbook.yaml</p>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_understanding_the_persistence_layer">Understanding the persistence layer</h3>
 <div class="paragraph">
-<p>geoCML Desktop features an immutible file system; the file system within the service cannot be changed directly. You may wonder how, then, are we do upload and change datasets contained within the geocml-desktop service?</p>
+<p>geoCML deployments do not persist data; the file system within the service should not ever be changed directly unless during the build process. You may wonder how, then, are you to upload and change datasets contained within the geoCML Desktop service?</p>
 </div>
 <div class="paragraph">
-<p>The persistence layer is a <em>mutible</em> directory shared between the geocml-desktop service and the deployment&#8217;s host machine. geoCML Base Deployments use Docker to bind the host machine&#8217;s local persistence layer to a persistence layer within the geocml-desktop service. This binding allows you to add files to the host machine&#8217;s persistence layer and have them available within the geocml-desktop service. The persistence layer for a geoCML Base Deployment may also be available to other services within the deployment.</p>
+<p>The persistence layer is a <em>mutible</em> directory shared between the geoCML Desktop service and the deployment&#8217;s host machine. geoCML Base Deployments use Docker to bind the host machine&#8217;s local persistence layer to a persistence layer within the geoCML Desktop service. This binding allows you to add files to the host machine&#8217;s persistence layer and have them available within the geoCML Desktop service. The persistence layer is also be available to other services within the deployment.</p>
+</div>
+<div class="sect3">
+<h4 id="_about_geocml_project_qgz">About geocml-project.qgz</h4>
+<div class="paragraph">
+<p>geoCML Desktop will automatically open geocml-project.qgz in QGIS when you connect to the XPRA service. geocml-project.qgz is the central project file for your entire geoCML deployment. By design, all of your GIS work must be done in this file.</p>
 </div>
 </div>
 </div>
-</div>
-<h1 id="_geocml_postgres" class="sect0">geoCML Postgres</h1>
-<div class="openblock partintro">
-<div class="content">
-geoCML deploys a micro-service container with a PostGIS enabled Postgres database by default for your project. This is the primary data store for a geoCML deployment.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_geocml_postgres">Configuring geoCML Postgres</h2>
+<h2 id="_geocml_postgres">geoCML Postgres</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>geoCML deploys a micro-service container with a PostGIS enabled Postgres database by default for your project. This is the primary data store for a geoCML deployment.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuring_geocml_postgres">Configuring geoCML Postgres</h3>
 <div class="paragraph">
 <p>geoCML Postgres can be fully configured to suit the needs of your use case. geoCML Postgres has a two step configuration process: Dockerfile configuration, and Ansible configuration.</p>
 </div>
-<div class="sect2">
-<h3 id="_docker_configuration">Docker Configuration</h3>
+<div class="sect3">
+<h4 id="_docker_configuration_2">Docker Configuration</h4>
 <div class="paragraph">
 <p>You can use Docker to install packages to your geoCML Postgres service deployment. Open geocml-base-deployment\Dockerfiles\Dockerfile.geocml-postgres in your favorite text editor, and between the Customize Container Here and End Customizations comments, add your use-case specific geocml-postgres configuration steps.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_ansible_configuration">Ansible Configuration</h3>
+<div class="sect3">
+<h4 id="_ansible_configuration_2">Ansible Configuration</h4>
 <div class="paragraph">
 <p>You can use Ansible to automate advanced, tedious configuration workflows. By default, geoCML Postgres uses Ansible to automate configuring your database. You can further customize your advanced configurations. Open geocml-base-deployment/ansible-playbooks/geocml-postgres-playbook.yaml</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_accessing_your_database">Accessing your database</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_accessing_your_database">Accessing your database</h3>
 <div class="paragraph">
 <p>geoCML Postgres creates a database named geocml_db, which is the primary datastore for your geoCML project. <em>Do not change the name of this database!</em> You can access your database in several ways:</p>
 </div>
@@ -721,15 +722,23 @@ geoCML deploys a micro-service container with a PostGIS enabled Postgres databas
 </ul>
 </div>
 <div class="paragraph">
-<p><em>It is strongly recommended that you change your default geocml_db user password before going to production!</em></p>
+<p>geoCML Postgres also configures an admin user for your data store. The default credentials for accessing your data store as an admin are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Username: postgres</p>
+</li>
+<li>
+<p>Password: admin</p>
+</li>
+</ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_current_limitations_of_the_geocml_postgres_service">Current limitations of the geoCML Postgres service</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_current_limitations_of_the_geocml_postgres_service">Current limitations of the geoCML Postgres service</h3>
 <div class="paragraph">
-<p>In geoCML v0.1.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:</p>
+<p>In geoCML v0.2.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -746,37 +755,38 @@ geoCML deploys a micro-service container with a PostGIS enabled Postgres databas
 </div>
 </div>
 </div>
-<h1 id="_geocml_server" class="sect0">geoCML Server</h1>
-<div class="openblock partintro">
-<div class="content">
-geoCML deploys a micro-service container a QGIS Server instance, an Apache web server, as well as a Django application, called geoCML Server. This micro-service is responsible for implementing web and server GIS paradigms for your project.
-</div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_geocml_server">Configuring geoCML Server</h2>
+<h2 id="_geocml_server">geoCML Server</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>geoCML deploys a micro-service container with a QGIS Server instance, an Apache web server, and a React application called geoCML Server. This micro-service is responsible for implementing web and server GIS paradigms for your project. geoCML Server collects information from geocml-project.qgz to serve your data via several web services.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuring_geocml_server">Configuring geoCML Server</h3>
 <div class="paragraph">
 <p>geoCML Server can be fully configured to suit the needs of your use case. geoCML Server has a two step configuration process: Dockerfile configuration, and Ansible configuration.</p>
 </div>
-<div class="sect2">
-<h3 id="_docker_configuration_2">Docker Configuration</h3>
+<div class="sect3">
+<h4 id="_docker_configuration_3">Docker Configuration</h4>
 <div class="paragraph">
 <p>You can use Docker to install packages to your geoCML Server service deployment. Open geocml-base-deployment\Dockerfiles\Dockerfile.geocml-server in your favorite text editor, and between the Customize Container Here and End Customizations comments, add your use-case specific geocml-server configuration steps.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_ansible_configuration_2">Ansible Configuration</h3>
+<div class="sect3">
+<h4 id="_ansible_configuration_3">Ansible Configuration</h4>
 <div class="paragraph">
 <p>You can use Ansible to automate advanced, tedious configuration workflows. By default, geoCML Server uses Ansible to automate configuring your Apache and QGIS Server. You can further customize your advanced configurations. Open geocml-base-deployment/ansible-playbooks/geocml-server-playbook.yaml</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_accessing_geocml_server_via_the_web">Accessing geoCML Server via the web</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_accessing_geocml_server_via_the_web">Accessing geoCML Server via the web</h3>
 <div class="paragraph">
-<p>geoCML Portal is accessible via {deployment host URL}. geoCML Portal is a web application frontend for geoCML Server. geoCML Portal can also act as a dashboard for your entire deployment. It features:</p>
+<p>geoCML Server Portal is accessible via {deployment host URL}:80. geoCML Server Portal is a web application frontend for geoCML Server written in React. geoCML Server Portal acts as the secondary user entrypoint for your deployment, allowing you to share data with others over the internet. geoCML Server Portal relies on Web Map Service (WMS) information from geocml-project.qgz in order to properly display your instance information.</p>
+</div>
+<div class="paragraph">
+<p>geoCML Server Portal features:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -787,7 +797,7 @@ geoCML deploys a micro-service container a QGIS Server instance, an Apache web s
 <p>copyright claims for your project&#8217;s data,</p>
 </li>
 <li>
-<p>an optional hosted Leaflet web map,</p>
+<p>a hosted Leaflet web map,</p>
 </li>
 <li>
 <p>WMS connection information,</p>
@@ -799,33 +809,215 @@ geoCML deploys a micro-service container a QGIS Server instance, an Apache web s
 <p>WCS connection information,</p>
 </li>
 <li>
-<p>geoCML Desktop VNC URL,</p>
+<p>a preview of your hosted data,</p>
 </li>
 <li>
-<p>geocml_db connection information,</p>
-</li>
-<li>
-<p>a Deployment Health Dashboard showing the operational status of each of your deployment&#8217;s services.</p>
+<p>a list of all hosted data tables</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_accessing_geocml_server_via_an_api">Accessing geoCML Server via an API</h3>
 <div class="paragraph">
-<p>You can configure geoCML Portal using the portal-config.yaml file found in your deployment&#8217;s persistence layer.</p>
+<p>geoCML Server exposes all functionality for QGIS Server via cfcgi and Apache. Learn more about QGIS Server here: <a href="https://docs.qgis.org/3.34/en/docs/server_manual/index.html" class="bare">https://docs.qgis.org/3.34/en/docs/server_manual/index.html</a></p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_accessing_geocml_server_via_an_api">Accessing geoCML Server via an API</h2>
+<h2 id="_geocml_task_scheduler_gts">geoCML Task Scheduler (gTS)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>geoCML Server exposes all functionality for QGIS Server via Apache. Learn more about QGIS Server here: <a href="https://docs.qgis.org/3.34/en/docs/server_manual/index.html" class="bare">https://docs.qgis.org/3.34/en/docs/server_manual/index.html</a></p>
+<p>geoCML deploys a micro-service container called geoCML Task Scheduler (gTS). This micro-service is responsible for automating routine tasks within your deployment such as backing up data from geoCML Postgres, restoring geocml_db from a backup, and healthchecking services within your deployment. geoCML Task Scheduler exposes a simple Python API for developing additional tasks.</p>
+</div>
+<div class="sect2">
+<h3 id="_configuring_geocml_task_scheduler">Configuring geoCML Task Scheduler</h3>
+<div class="paragraph">
+<p>geoCML Task Scheduler can be fully configured to suit the needs of your use case. geoCML Task Scheduler has a two step configuration process: Dockerfile configuration, and Ansible configuration.</p>
+</div>
+<div class="sect3">
+<h4 id="_docker_configuration_4">Docker Configuration</h4>
+<div class="paragraph">
+<p>You can use Docker to install packages to your geoCML Task Scheduler service deployment. Open geocml-base-deployment\Dockerfiles\Dockerfile.geocml-task-scheduler in your favorite text editor, and between the Customize Container Here and End Customizations comments, add your use-case specific geocml-task-scheduler configuration steps.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ansible_configuration_4">Ansible Configuration</h4>
+<div class="paragraph">
+<p>You can use Ansible to automate advanced, tedious configuration workflows. Open geocml-base-deployment/ansible-playbooks/geocml-task-scheduler-playbook.yaml</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_understanding_dbbackups">Understanding DBBackups</h3>
+<div class="paragraph">
+<p>geoCML Postgres is not a persistent data store. Because of this, when your geoCML instance goes down, you will risk losing information in your data store. geoCML Task Scheduler handles this by automatically backing up geocml_db every hour. When your instance is brought back up, geoCML Task Scheduler will automatically restore your data store from the most recent backup. Backups are stored in the DBBackups directory in the persistence layer. Each DBBackup contains a .tabor file defining the schema of geocml_db and a series of CSV files representing the actual data in your tables.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_writing_tasks">Writing Tasks</h3>
+<div class="paragraph">
+<p>You can create custom tasks in geoCML Task Scheduler.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open <code>build-resources/geocml-task-scheduler/geocml-task-scheduler/</code> in your favorite text editor.</p>
+</li>
+<li>
+<p>Create a new Python file.</p>
+</li>
+<li>
+<p>Define a function in the new file with your task logic.</p>
+</li>
+<li>
+<p>Return 0 if you want your task to run only once. Otherwise, your task will run according to its position in the schedule.</p>
+</li>
+<li>
+<p>Save your Python file.</p>
+</li>
+<li>
+<p>Open <code>schedule.py</code></p>
+</li>
+<li>
+<p>Create a new Task object, instantiated with your new function and its execution frequency (in seconds).</p>
+</li>
+<li>
+<p>Start the task with <code>&lt;your_task&gt;.start()</code></p>
+</li>
+<li>
+<p>Rebuild the geocml-task-scheduler container and deploy</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Your new task is created, and it is scheduled for execution.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tabor">Tabor</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Tabor is a database modeling language for GIS based on YAML, but with additional syntax restrictions. The goal of Tabor is to allow GIS users to create and maintain complex database rules using plain-text configuration files. The following is an example of a Tabor configuration file for a PostGIS database:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>tabor: 0.2.0
+layers:
+
+- name: grass
+  schema: public
+  owner: geocml
+  geometry: polygon
+  fields:
+    - name: fid
+      type: int
+      pk: true
+
+- name: trees
+  schema: public
+  owner: geocml
+  geometry: point
+  fields:
+  - name: fid
+    type: int
+    pk: true
+  - name: genus
+    type: text
+  - name: species
+    type: text
+  - name: height_meters
+    type: numeric
+  - name: circumference_cm
+    type: numeric
+  constraints:
+    - name: on
+      layer: grass
+
+- name: streams
+  schema: public
+  owner: geocml
+  geometry: polyline
+  fields:
+    - name: fid
+      type: int
+      pk: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Running this file through the Tabor command line utility generates a valid PostgreSQL schema query that can be used to create or update tables in a PostGIS database.</p>
+</div>
+<div class="sect2">
+<h3 id="_downloading_and_installing_tabor">Downloading and Installing Tabor</h3>
+<div class="paragraph">
+<p>Tabor can be downloaded directly from <a href="https://github.com/geoCML/tabor" class="bare">https://github.com/geoCML/tabor</a>. After downloading, simply extract the downloaded .zip file to a directory accessible on your terminal path.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_command_line_usage">Command Line Usage</h3>
+<div class="paragraph">
+<p><code>tabor read --file &lt;path/to/file&gt;</code> &#8594; Converts a .tabor file into a PostGIS schema query.</p>
+</div>
+<div class="paragraph">
+<p><code>tabor write --file &lt;path/to/file&gt; --db &lt;name_of_psql_db&gt; --username &lt;name of db user&gt; --password &lt;password of db user?&gt; --host &lt;host of psql db?&gt; --port &lt;port of psql db?&gt; --ignore &lt;tables to ignore?&gt;</code> &#8594; Converts a PostGIS database to a .tabor file</p>
+</div>
+<div class="paragraph">
+<p><code>tabor load --file &lt;path/to/file&gt; --db &lt;name_of_psql_db&gt; --username &lt;name of db user&gt; --password &lt;password of db user?&gt; --host &lt;host of psql db?&gt; --port &lt;port of psql db?&gt;</code> &#8594; Loads a PostGIS database from a .tabor file.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supported_geometry_types">Supported Geometry Types</h3>
+<div class="paragraph">
+<p>Tabor supports the following geometry types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>polygon</code> &#8594; for 2D shapes such as political boundaries</p>
+</li>
+<li>
+<p><code>polyline</code> &#8594; for 1D shapes such as roadway centerlines</p>
+</li>
+<li>
+<p><code>point</code> &#8594; for 1D shapes such as trees</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a layer has no geometry type, it may still be defined as a non-geometric table in the database.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supported_field_types">Supported Field Types</h3>
+<div class="paragraph">
+<p>Tabor supports the following field types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>int</code> &#8594; for whole numbers</p>
+</li>
+<li>
+<p><code>numeric</code> &#8594; for decimal numbers</p>
+</li>
+<li>
+<p><code>text</code> &#8594; for unlimited length character strings</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It is strongly recommended that you have a primary key (pk) on each of your layers. You can define a field as a primary key using <code>pk: true</code>.</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-06-22 22:47:39 UTC
+Last updated 2024-09-07 20:59:12 UTC
 </div>
 </div>
 </body>
