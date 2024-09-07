@@ -1,0 +1,35 @@
+== geoCML Task Scheduler (gTS)
+
+geoCML deploys a micro-service container called geoCML Task Scheduler (gTS). This micro-service is responsible for automating routine tasks within your deployment such as backing up data from geoCML Postgres, restoring geocml_db from a backup, and healthchecking services within your deployment. geoCML Task Scheduler exposes a simple Python API for developing additional tasks.
+
+=== Configuring geoCML Task Scheduler
+
+geoCML Task Scheduler can be fully configured to suit the needs of your use case. geoCML Task Scheduler has a two step configuration process: Dockerfile configuration, and Ansible configuration.
+
+==== Docker Configuration
+
+You can use Docker to install packages to your geoCML Task Scheduler service deployment. Open geocml-base-deployment\Dockerfiles\Dockerfile.geocml-task-scheduler in your favorite text editor, and between the Customize Container Here and End Customizations comments, add your use-case specific geocml-task-scheduler configuration steps.
+
+==== Ansible Configuration
+
+You can use Ansible to automate advanced, tedious configuration workflows. Open geocml-base-deployment/ansible-playbooks/geocml-task-scheduler-playbook.yaml
+
+=== Understanding DBBackups
+
+geoCML Postgres is not a persistent data store. Because of this, when your geoCML instance goes down, you will risk losing information in your data store. geoCML Task Scheduler handles this by automatically backing up geocml_db every hour. When your instance is brought back up, geoCML Task Scheduler will automatically restore your data store from the most recent backup. Backups are stored in the DBBackups directory in the persistence layer. Each DBBackup contains a .tabor file defining the schema of geocml_db and a series of CSV files representing the actual data in your tables.
+
+=== Writing Tasks
+
+You can create custom tasks in geoCML Task Scheduler.
+
+1. Open `build-resources/geocml-task-scheduler/geocml-task-scheduler/` in your favorite text editor.
+2. Create a new Python file.
+3. Define a function in the new file with your task logic.
+4. Return 0 if you want your task to run only once. Otherwise, your task will run according to its position in the schedule.
+5. Save your Python file.
+6. Open `schedule.py`
+7. Create a new Task object, instantiated with your new function and its execution frequency (in seconds).
+8. Start the task with `<your_task>.start()`
+9. Rebuild the geocml-task-scheduler container and deploy
+
+Your new task is created, and it is scheduled for execution.
