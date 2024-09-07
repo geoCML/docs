@@ -1,20 +1,20 @@
-= geoCML Postgres
+== geoCML Postgres
 
 geoCML deploys a micro-service container with a PostGIS enabled Postgres database by default for your project. This is the primary data store for a geoCML deployment.
 
-== Configuring geoCML Postgres
+=== Configuring geoCML Postgres
 
-geoCML Postgres can be fully configured to suit the needs of your use case. geoCML Postgres has a two step configuration process: Dockerfile configuration, and Ansible configuration. 
+geoCML Postgres can be fully configured to suit the needs of your use case. geoCML Postgres has a two step configuration process: Dockerfile configuration, and Ansible configuration.
 
-=== Docker Configuration
+==== Docker Configuration
 
 You can use Docker to install packages to your geoCML Postgres service deployment. Open geocml-base-deployment\Dockerfiles\Dockerfile.geocml-postgres in your favorite text editor, and between the Customize Container Here and End Customizations comments, add your use-case specific geocml-postgres configuration steps.
 
-=== Ansible Configuration
+==== Ansible Configuration
 
 You can use Ansible to automate advanced, tedious configuration workflows. By default, geoCML Postgres uses Ansible to automate configuring your database. You can further customize your advanced configurations. Open geocml-base-deployment/ansible-playbooks/geocml-postgres-playbook.yaml
 
-== Accessing your database
+=== Accessing your database
 
 geoCML Postgres creates a database named geocml_db, which is the primary datastore for your geoCML project. _Do not change the name of this database!_ You can access your database in several ways:
 
@@ -26,11 +26,14 @@ The default credentials for accessing your database are:
 - Username: geocml
 - Password: geocml
 
-_It is strongly recommended that you change your default geocml_db user password before going to production!_
+geoCML Postgres also configures an admin user for your data store. The default credentials for accessing your data store as an admin are:
 
-== Current limitations of the geoCML Postgres service
+- Username: postgres
+- Password: admin
 
-In geoCML v0.1.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:
+=== Current limitations of the geoCML Postgres service
+
+In geoCML v0.2.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:
 
 - Raster datasets,
 - Domain fields

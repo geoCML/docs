@@ -2,7 +2,7 @@
 :authors: Tristan Damron, Sean Marquez
 :toc:
 
-= geoCML v0.1.0 Documentation
+= geoCML v0.2.0 Documentation
 
 include::introduction.adoc[]
 
@@ -11,3 +11,7 @@ include::geocml-desktop.adoc[]
 include::geocml-postgres.adoc[]
 
 include::geocml-server.adoc[]
+
+include::geocml-task-scheduler.adoc[]
+
+include::tabor.adoc[]

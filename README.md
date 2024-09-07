@@ -15,7 +15,7 @@ Requirements:
  - asciidoctor-diagram
 
 *nix / Bash:
-> Run `./grawdlew generateHTML generatePDF`
+> Run `./gradlew generateHTML generatePDF`
 
 Windows:
 > Run `"./gradlew.bat" generateHTML generatePDF`
