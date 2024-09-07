@@ -40,7 +40,7 @@
       update_cache: yes
   - name: Install PlantUML and PDF support
     shell:
-      cmd: gem install asciidoctor-diagram rghost hexapdf text-hyphen rouge pygments.rb coderay asciidoctor-pdf
+      cmd: gem install asciidoctor-diagram asciidoctor-pdf
   - name: Get asciidoctor version
     shell: asciidoctor --version | grep Asciidoctor | sed 's/[[:alpha:]|(|[:space:]]//g' | sed 's/[*~://]//g'
     register: installed_asciidoctor_version
