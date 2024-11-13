@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
 <meta name="author" content="Tristan Damron, Sean Marquez">
-<title>geoCML v0.2.0 Documentation</title>
+<title>geoCML v0.3.0 Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book">
 <div id="header">
-<h1>geoCML v0.2.0 Documentation</h1>
+<h1>geoCML v0.3.0 Documentation</h1>
 <div class="details">
 <span id="author" class="author">Tristan Damron, Sean Marquez</span><br>
 </div>
@@ -452,6 +452,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_what_can_geocml_do">What can geoCML do?</a></li>
 <li><a href="#_what_can_geocml_not_do_out_of_the_box">What can geoCML <em>not</em> do out of the box?</a></li>
 <li><a href="#_quick_deployment_guide">Quick deployment guide</a></li>
+<li><a href="#_using_hosted_geocml_images_from_ghcr">Using hosted geoCML images from GHCR</a></li>
 </ul>
 </li>
 <li><a href="#_geocml_desktop">geoCML Desktop</a>
@@ -491,6 +492,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_supported_field_types">Supported Field Types</a></li>
 </ul>
 </li>
+<li><a href="#_drgon">DRGON</a>
+<ul class="sectlevel2">
+<li><a href="#_quickstart_guide">Quickstart Guide</a></li>
+<li><a href="#_api_reference">API Reference</a></li>
+<li><a href="#_moderating_drgon">Moderating DRGON</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -498,13 +506,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_introduction_to_geocml">Introduction to geoCML</h2>
 <div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../img/geoCML-Logo.png" alt="geoCML Logo" width="250" height="250">
+</div>
+</div>
 <div class="paragraph">
-<p>geoCML is a Containerized, Multi-paradigm, Lightweight deployment pattern for geographic information systems running locally or in the cloud. geoCML deployments package best-in-class open-source GIS software including QGIS and PostGIS allowing you to quickly go to production. In this topic, you will learn how geoCML deployments work and be able to make an informed decision about whether geoCML is a good choice your needs.</p>
+<p>geoCML is a Containerized, Multi-paradigm, Lightweight deployment pattern for geographic information systems running locally or in the cloud. geoCML deployments package best-in-class open-source GIS software, including QGIS and PostGIS, allowing you to quickly go to production. In this topic, you will learn how geoCML deployments work and be able to make an informed decision about whether geoCML is a good choice your needs.</p>
 </div>
 <div class="sect2">
 <h3 id="_how_does_geocml_work">How does geoCML work?</h3>
 <div class="paragraph">
-<p>geoCML deployments include four containerized microservices: geocml-desktop (the primary user entrypoint), geocml-server (the secondary user entrypoint), geocml-postgres (the primary data store), and geocml-task-scheduler (often abbreviated as gTS). Each service can communicate with each other via an internal network called geocml-network. Once deployed as a geoCML instance, you can begin using geoCML to complete GIS workflows. By design, each geoCML instance should host only one project/dataset. Multiple datasets should be hosted across multiple geoCML instances. Specific documentation on each service is available for your reference.</p>
+<p>geoCML deployments include four containerized microservices: geocml-desktop (the primary user entrypoint), geocml-server (the secondary user entrypoint), geocml-postgres (the primary data store), and geocml-task-scheduler (an automation service, often abbreviated as gTS). Each service can communicate via an internal network called geocml-network. Once deployed as a geoCML instance, you can begin using geoCML to complete GIS workflows. By design, each geoCML instance should host only one project/dataset. Multiple datasets should be hosted across multiple geoCML instances. Specific documentation on each service is available for your reference.</p>
 </div>
 </div>
 <div class="sect2">
@@ -531,6 +544,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>Persist information between containerized services via the persistence-layer directory</p>
+</li>
+<li>
+<p>Realtime GIS</p>
 </li>
 <li>
 <p>Use less space/resources than other enterprise GIS deployments</p>
@@ -572,10 +588,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><em>Get up and running with geoCML in under 15 minutes!</em></p>
 </div>
 <div class="paragraph">
-<p>geoCML deployments are multi-paradigm, offering a desktop GIS experience and a server GIS experience with a single deployment. You may host your geoCML instance locally or in the cloud, depending on your needs.</p>
+<p>geoCML deployments are multi-paradigm, offering a desktop, server, and web GIS experience with a single deployment. You may host your geoCML instance locally or in the cloud, depending on your needs.</p>
 </div>
 <div class="paragraph">
-<p>Before instantiating a geoCML deployment, you must have <a href="https://www.docker.com/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a> installed on the machine you want to host geoCML on. You do not need any additional GIS software installed on the machine. Once you have satisfied these conditions, please follow the following steps to deploy your geoCML instance.</p>
+<p>Before instantiating a geoCML deployment, you must have <a href="https://www.docker.com/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a> installed on the machine you want to host geoCML on. You do not need any additional GIS software installed on the host machine. Once you have satisfied these conditions, please follow the following steps to deploy your geoCML instance.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -586,18 +602,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Open a terminal and cd into the source code directory</p>
 </li>
 <li>
-<p>Run <code>docker compose pull</code> to pull geoCML service images from the project&#8217;s hosted container registry (optionally, run <code>docker compose build</code> to build the images on your machine; this is a requirement if you are modifying your images and have not pushed them to your own registry!)</p>
+<p>Copy <code>.env.example</code> into a new file called <code>.env</code></p>
+</li>
+<li>
+<p>Update your <code>.env</code> to include your deployment specific configuration variables</p>
+</li>
+<li>
+<p>Run <code>sh build.sh</code> to build geoCML service images on your machine.</p>
 </li>
 <li>
 <p>Run <code>docker network create geocml-network</code></p>
 </li>
 <li>
-<p>Run <code>docker compose up -d</code> to bring up the instance</p>
+<p>Run <code>sh start.sh</code> to bring up the instance.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>That&#8217;s it! You can access geoCML Desktop via {deployment host URL}:10000 or geoCML Server portal via {deployment host URL}:80 using a web browser. Further configuration steps for each of these services are discussed in later topics.</p>
+<p>That&#8217;s it! You can access geoCML Desktop via {deployment host URL}:10000 or geoCML Server Portal via {deployment host URL}:80 using a web browser. Further configuration steps for each of these services are discussed in later topics.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_hosted_geocml_images_from_ghcr">Using hosted geoCML images from GHCR</h3>
+<div class="paragraph">
+<p>The geoCML development team hosts pre-built containers at our container registry on Github. These containers are a great way to demo geoCML, but please note that these services are <em>not production ready</em>, because they lack the required build arguments. If you want to use geoCML in production, please build your containers.</p>
+</div>
+<div class="paragraph">
+<p>Please keep in mind that the GEOCML_DESKTOP_PASSWORD variable in the <code>.env</code> file must be set to access your deployment via geoCML Desktop.</p>
 </div>
 </div>
 </div>
@@ -605,8 +636,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_geocml_desktop">geoCML Desktop</h2>
 <div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../img/geoCML-Desktop-Logo.png" alt="geoCML Desktop Logo" width="250" height="250">
+</div>
+</div>
 <div class="paragraph">
-<p>geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with <a href="https://www.qgis.org/en/site/">QGIS</a>, a best-in-class open-source desktop GIS application.</p>
+<p>geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with <a href="https://www.qgis.org/en/site/">QGIS</a>, a best-in-class open-source desktop GIS application. geoCML Desktop is password protected. You must set a password within your deployment&#8217;s <code>.env</code> file.</p>
 </div>
 <div class="sect2">
 <h3 id="_connecting_to_geocml_desktop">Connecting to geoCML Desktop</h3>
@@ -658,7 +694,7 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <p>geoCML deployments do not persist data; the file system within the service should not ever be changed directly unless during the build process. You may wonder how, then, are you to upload and change datasets contained within the geoCML Desktop service?</p>
 </div>
 <div class="paragraph">
-<p>The persistence layer is a <em>mutible</em> directory shared between the geoCML Desktop service and the deployment&#8217;s host machine. geoCML Base Deployments use Docker to bind the host machine&#8217;s local persistence layer to a persistence layer within the geoCML Desktop service. This binding allows you to add files to the host machine&#8217;s persistence layer and have them available within the geoCML Desktop service. The persistence layer is also be available to other services within the deployment.</p>
+<p>The persistence layer is a <em>mutible and persistent</em> directory shared between the geoCML Desktop service and the deployment&#8217;s host machine. geoCML Base Deployments use Docker to bind the host machine&#8217;s local persistence layer to a persistence layer within the geoCML Desktop service. This binding allows you to add files to the host machine&#8217;s persistence layer and have them available within the geoCML Desktop service. The persistence layer is also be available to other services within the deployment.</p>
 </div>
 <div class="sect3">
 <h4 id="_about_geocml_project_qgz">About geocml-project.qgz</h4>
@@ -672,6 +708,11 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <div class="sect1">
 <h2 id="_geocml_postgres">geoCML Postgres</h2>
 <div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../img/geoCML-Postgres-Logo.png" alt="geoCML Postgres Logo" width="250" height="250">
+</div>
+</div>
 <div class="paragraph">
 <p>geoCML deploys a micro-service container with a PostGIS enabled Postgres database by default for your project. This is the primary data store for a geoCML deployment.</p>
 </div>
@@ -734,11 +775,14 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>You can change the default password for both the geocml and postgres users in your deployment&#8217;s <code>.env</code> file. Note that these are build-time arguments; you must rebuild your containers to commit these changes.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_current_limitations_of_the_geocml_postgres_service">Current limitations of the geoCML Postgres service</h3>
 <div class="paragraph">
-<p>In geoCML v0.2.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:</p>
+<p>In geoCML v0.3.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -751,7 +795,7 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 </ul>
 </div>
 <div class="paragraph">
-<p>Support for these data will be added to geoCML Postgres in a future release of geoCML.</p>
+<p>If you are working with raster data, please store them in the persistence layer rather than in geoCML Postgres.</p>
 </div>
 </div>
 </div>
@@ -759,8 +803,13 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <div class="sect1">
 <h2 id="_geocml_server">geoCML Server</h2>
 <div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../img/geoCML-Server-Logo.png" alt="geoCML Server Logo" width="250" height="250">
+</div>
+</div>
 <div class="paragraph">
-<p>geoCML deploys a micro-service container with a QGIS Server instance, an Apache web server, and a React application called geoCML Server. This micro-service is responsible for implementing web and server GIS paradigms for your project. geoCML Server collects information from geocml-project.qgz to serve your data via several web services.</p>
+<p>geoCML deploys a micro-service container with a QGIS Server instance, an Apache web server, and a React application called geoCML Server Portal (a frontend for your server GIS). This micro-service is responsible for implementing web and server GIS paradigms for your project. geoCML Server collects information from geocml-project.qgz to serve your data via several web services.</p>
 </div>
 <div class="sect2">
 <h3 id="_configuring_geocml_server">Configuring geoCML Server</h3>
@@ -794,6 +843,9 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <p>a description of your project,</p>
 </li>
 <li>
+<p>your contact information,</p>
+</li>
+<li>
 <p>copyright claims for your project&#8217;s data,</p>
 </li>
 <li>
@@ -812,7 +864,10 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <p>a preview of your hosted data,</p>
 </li>
 <li>
-<p>a list of all hosted data tables</p>
+<p>a list of all hosted data tables,</p>
+</li>
+<li>
+<p>similar recommended datasets from DRGON</p>
 </li>
 </ul>
 </div>
@@ -820,7 +875,7 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <div class="sect2">
 <h3 id="_accessing_geocml_server_via_an_api">Accessing geoCML Server via an API</h3>
 <div class="paragraph">
-<p>geoCML Server exposes all functionality for QGIS Server via cfcgi and Apache. Learn more about QGIS Server here: <a href="https://docs.qgis.org/3.34/en/docs/server_manual/index.html" class="bare">https://docs.qgis.org/3.34/en/docs/server_manual/index.html</a></p>
+<p>geoCML Server exposes all API functionality for QGIS Server via cfcgi and Apache. Learn more about QGIS Server here: <a href="https://docs.qgis.org/3.34/en/docs/server_manual/index.html" class="bare">https://docs.qgis.org/3.34/en/docs/server_manual/index.html</a></p>
 </div>
 </div>
 </div>
@@ -828,6 +883,11 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <div class="sect1">
 <h2 id="_geocml_task_scheduler_gts">geoCML Task Scheduler (gTS)</h2>
 <div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../img/geoCML-Task-Scheduler-Logo.png" alt="geoCML Task Scheduler Logo" width="250" height="250">
+</div>
+</div>
 <div class="paragraph">
 <p>geoCML deploys a micro-service container called geoCML Task Scheduler (gTS). This micro-service is responsible for automating routine tasks within your deployment such as backing up data from geoCML Postgres, restoring geocml_db from a backup, and healthchecking services within your deployment. geoCML Task Scheduler exposes a simple Python API for developing additional tasks.</p>
 </div>
@@ -900,6 +960,11 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <div class="sect1">
 <h2 id="_tabor">Tabor</h2>
 <div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../img/Tabor-Logo.png" alt="Tabor Logo" width="250" height="250">
+</div>
+</div>
 <div class="paragraph">
 <p>Tabor is a database modeling language for GIS based on YAML, but with additional syntax restrictions. The goal of Tabor is to allow GIS users to create and maintain complex database rules using plain-text configuration files. The following is an example of a Tabor configuration file for a PostGIS database:</p>
 </div>
@@ -1014,10 +1079,100 @@ layers:
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_drgon">DRGON</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../img/DRGON-Logo.png" alt="DRGON Logo" width="250" height="250">
+</div>
+</div>
+<div class="paragraph">
+<p>DRGON (pronounced as 'Dragon') is a Distributed Registry of GISystems Over a Network. DRGON collects a registry geoCML deployments over the internet (or an intranet, if you prefer). Using a simple REST API, you can easily query DRGON to find the perfect dataset. A public registry is hosted at <a href="https://drgon.geocml.com" class="bare">https://drgon.geocml.com</a>, but you may also self host DRGON, depending on your needs.</p>
+</div>
+<div class="sect2">
+<h3 id="_quickstart_guide">Quickstart Guide</h3>
+<div class="paragraph">
+<p>Before interacting with DRGON, you must first have a hosted geoCML deployment with a properly configured geoCML Server Portal. Next, register for an API key via a POST request to &lt;DRGON_HOST&gt;/apikey; You must provide an email address in the request body. <em>Copy your API key to a safe place, you will only be able to view it once!</em></p>
+</div>
+<div class="paragraph">
+<p>On your deployment&#8217;s server machine, add the following values to your <code>.env</code> file:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>DRGON_HOST: the host URL of the DRGON instance you want to use (Do not include trailing slash)</p>
+</li>
+<li>
+<p>DRGON_API_KEY: your DRGON API key</p>
+</li>
+<li>
+<p>GEOCML_DEPLOYMENT_HOST: the domain name of your hosted geoCML instance</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Rebuild your geoCML deployment, and restart your instance. After about a minute of up-time, geoCML Task Scheduler will ping DRGON and automatically register your deployment.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_api_reference">API Reference</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Endpoint</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Method</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Request Body</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Description</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apikey/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>{ email: "<a href="mailto:me@example.com">me@example.com</a>" }</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requests an API key necessary for registering your geoCML deployment with DRGON. This key is 100% free, forever.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requests a registry containing all geoCML deployments known to DRGON.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>{ key: "YOUR_API_KEY", title: "DEPLOYMENT TITLE", description: "DEPLOYMENT DESCRIPTION", owner: "OWNER NAME", tags: "TAG,TAG,TAG" }</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requests that a hosted geoCML Deployment be registered with DRGON.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>recommendations/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>?tags=TAG,TAG,TAG&amp;limit=999</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requests DRGON for recommended datasets based on the provided tags.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_moderating_drgon">Moderating DRGON</h3>
+<div class="paragraph">
+<p>Whoever hosts a DRGON instance is free to moderate their registry however they wish. DRGON automatically moderates deployments containing banned words (e.g. offensive words), however manual review and moderation of deployments in your registry is highly recommended.</p>
+</div>
+<div class="paragraph">
+<p>The DRGON development team recommends that you prevent users from abusing your registry, either by uploading duplicate datasets, or by registering non-geoCML deployments. If a user is abusing your registry, you can revoke their API key within the <code>drgon-postgres</code> service database.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-09-07 21:10:48 UTC
+Last updated 2024-11-13 20:29:38 UTC
 </div>
 </div>
 </body>
