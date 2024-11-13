@@ -1,6 +1,8 @@
 == geoCML Desktop
 
-geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with https://www.qgis.org/en/site/[QGIS], a best-in-class open-source desktop GIS application.
+image::geoCML-Desktop-Logo.png["geoCML Desktop Logo", 250, 250]
+
+geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with https://www.qgis.org/en/site/[QGIS], a best-in-class open-source desktop GIS application. geoCML Desktop is password protected. You must set a password within your deployment's `.env` file.
 
 === Connecting to geoCML Desktop
 
@@ -31,7 +33,7 @@ You can use Ansible to automate advanced, tedious configuration workflows. By de
 
 geoCML deployments do not persist data; the file system within the service should not ever be changed directly unless during the build process. You may wonder how, then, are you to upload and change datasets contained within the geoCML Desktop service?
 
-The persistence layer is a _mutible_ directory shared between the geoCML Desktop service and the deployment's host machine. geoCML Base Deployments use Docker to bind the host machine's local persistence layer to a persistence layer within the geoCML Desktop service. This binding allows you to add files to the host machine's persistence layer and have them available within the geoCML Desktop service. The persistence layer is also be available to other services within the deployment.
+The persistence layer is a _mutible and persistent_ directory shared between the geoCML Desktop service and the deployment's host machine. geoCML Base Deployments use Docker to bind the host machine's local persistence layer to a persistence layer within the geoCML Desktop service. This binding allows you to add files to the host machine's persistence layer and have them available within the geoCML Desktop service. The persistence layer is also be available to other services within the deployment.
 
 
 ==== About geocml-project.qgz

@@ -1,5 +1,7 @@
 == Tabor
 
+image::Tabor-Logo.png["Tabor Logo", 250, 250]
+
 Tabor is a database modeling language for GIS based on YAML, but with additional syntax restrictions. The goal of Tabor is to allow GIS users to create and maintain complex database rules using plain-text configuration files. The following is an example of a Tabor configuration file for a PostGIS database:
 
 ```
