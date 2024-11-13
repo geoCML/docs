@@ -1,5 +1,7 @@
 == geoCML Task Scheduler (gTS)
 
+image::geoCML-Task-Scheduler-Logo.png["geoCML Task Scheduler Logo", 250, 250]
+
 geoCML deploys a micro-service container called geoCML Task Scheduler (gTS). This micro-service is responsible for automating routine tasks within your deployment such as backing up data from geoCML Postgres, restoring geocml_db from a backup, and healthchecking services within your deployment. geoCML Task Scheduler exposes a simple Python API for developing additional tasks.
 
 === Configuring geoCML Task Scheduler

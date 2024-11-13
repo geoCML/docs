@@ -1,5 +1,7 @@
 == geoCML Postgres
 
+image::geoCML-Postgres-Logo.png["geoCML Postgres Logo", 250, 250]
+
 geoCML deploys a micro-service container with a PostGIS enabled Postgres database by default for your project. This is the primary data store for a geoCML deployment.
 
 === Configuring geoCML Postgres
@@ -31,11 +33,14 @@ geoCML Postgres also configures an admin user for your data store. The default c
 - Username: postgres
 - Password: admin
 
+You can change the default password for both the geocml and postgres users in your deployment's `.env` file. Note that these are build-time arguments; you must rebuild your containers to commit these changes.
+
 === Current limitations of the geoCML Postgres service
 
-In geoCML v0.2.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:
+In geoCML v0.3.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:
 
 - Raster datasets,
 - Domain fields
 
-Support for these data will be added to geoCML Postgres in a future release of geoCML.
+If you are working with raster data, please store them in the persistence layer rather than in geoCML Postgres.
+

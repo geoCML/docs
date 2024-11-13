@@ -1,6 +1,8 @@
 == geoCML Server
 
-geoCML deploys a micro-service container with a QGIS Server instance, an Apache web server, and a React application called geoCML Server. This micro-service is responsible for implementing web and server GIS paradigms for your project. geoCML Server collects information from geocml-project.qgz to serve your data via several web services.
+image::geoCML-Server-Logo.png["geoCML Server Logo", 250, 250]
+
+geoCML deploys a micro-service container with a QGIS Server instance, an Apache web server, and a React application called geoCML Server Portal (a frontend for your server GIS). This micro-service is responsible for implementing web and server GIS paradigms for your project. geoCML Server collects information from geocml-project.qgz to serve your data via several web services.
 
 === Configuring geoCML Server
 
@@ -21,14 +23,17 @@ geoCML Server Portal is accessible via {deployment host URL}:80. geoCML Server P
 geoCML Server Portal features:
 
 - a description of your project,
+- your contact information,
 - copyright claims for your project's data,
 - a hosted Leaflet web map,
 - WMS connection information,
 - WFS connection information,
 - WCS connection information,
 - a preview of your hosted data,
-- a list of all hosted data tables
+- a list of all hosted data tables,
+- similar recommended datasets from DRGON
 
 === Accessing geoCML Server via an API
 
-geoCML Server exposes all functionality for QGIS Server via cfcgi and Apache. Learn more about QGIS Server here: https://docs.qgis.org/3.34/en/docs/server_manual/index.html
+geoCML Server exposes all API functionality for QGIS Server via cfcgi and Apache. Learn more about QGIS Server here: https://docs.qgis.org/3.34/en/docs/server_manual/index.html
+

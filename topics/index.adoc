@@ -2,7 +2,9 @@
 :authors: Tristan Damron, Sean Marquez
 :toc:
 
-= geoCML v0.2.0 Documentation
+ifndef::imagesdir[:imagesdir: ../img/]
+
+= geoCML v0.3.0 Documentation
 
 include::introduction.adoc[]
 
@@ -15,3 +17,5 @@ include::geocml-server.adoc[]
 include::geocml-task-scheduler.adoc[]
 
 include::tabor.adoc[]
+
+include::drgon.adoc[]
