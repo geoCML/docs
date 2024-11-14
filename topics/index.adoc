@@ -2,7 +2,7 @@
 :authors: Tristan Damron, Sean Marquez
 :toc:
 
-ifndef::imagesdir[:imagesdir: ../img/]
+ifndef::imagesdir[:imagesdir: ./img/]
 
 = geoCML v0.3.0 Documentation
 

@@ -17,5 +17,3 @@ Requirements:
 *nix / Bash:
 > Run `./gradlew generateHTML generatePDF`
 
-Windows:
-> Run `"./gradlew.bat" generateHTML generatePDF`
