@@ -242,5 +242,7 @@ eval "set -- $(
         tr '\n' ' '
     )" '"$@"'
 
+mkdir ./build/
 cp -r ./img/ ./build/img/
 exec "$JAVACMD" "$@"
+
