@@ -490,6 +490,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_command_line_usage">Command Line Usage</a></li>
 <li><a href="#_supported_geometry_types">Supported Geometry Types</a></li>
 <li><a href="#_supported_field_types">Supported Field Types</a></li>
+<li><a href="#_data_constraints">Data Constraints</a></li>
 </ul>
 </li>
 <li><a href="#_drgon">DRGON</a>
@@ -970,13 +971,14 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>tabor: 0.2.0
+<pre class="highlight"><code>tabor: 0.3.0
 layers:
 
 - name: grass
   schema: public
   owner: geocml
   geometry: polygon
+  srid: 4326
   fields:
     - name: fid
       type: int
@@ -986,6 +988,7 @@ layers:
   schema: public
   owner: geocml
   geometry: point
+  srid: 4326
   fields:
   - name: fid
     type: int
@@ -1006,6 +1009,7 @@ layers:
   schema: public
   owner: geocml
   geometry: polyline
+  srid: 4326
   fields:
     - name: fid
       type: int
@@ -1054,11 +1058,14 @@ layers:
 <div class="paragraph">
 <p>If a layer has no geometry type, it may still be defined as a non-geometric table in the database.</p>
 </div>
+<div class="paragraph">
+<p>The spatial reference of each layer in your Tabor file can be defined with the <code>srid</code> field, followed by the SRID of your reference system.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_supported_field_types">Supported Field Types</h3>
 <div class="paragraph">
-<p>Tabor supports the following field types:</p>
+<p>Tabor supports the following primitive field types:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1071,10 +1078,78 @@ layers:
 <li>
 <p><code>text</code> &#8594; for unlimited length character strings</p>
 </li>
+<li>
+<p><code>boolean</code> &#8594; for true or false values</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
+<p>Tabor also supports arrays of primitive data. You can define an array as <code>type: &lt;primitive&gt; array</code></p>
+</div>
+<div class="paragraph">
 <p>It is strongly recommended that you have a primary key (pk) on each of your layers. You can define a field as a primary key using <code>pk: true</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data_constraints">Data Constraints</h3>
+<div class="paragraph">
+<p>You can define complex business logic in your Tabor file with data constraints. Data constraints ensure that changes to your database table meets specific rules before they are committed to the database. You can choose to include as many data constraints on your layers as you need.</p>
+</div>
+<div class="paragraph">
+<p>Tabor supports the following data constraints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>on</code> &#8594; Checks that new features are at least partially within the boundaries of another layer (works with all geometry types)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ex.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">constraints:
+  - name: on
+    layer: other_layer</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>length</code> &#8594; Checks that new polyline features have either a minimum or maximum length</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ex.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">constraints:
+  - name: length
+    minimum: 0.5
+    maximum: 99.5 # You must include either a minimum or maximum value, but not both!</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>near</code> &#8594; Checks that new features are placed within a given distance of another layer (works with all geometry type)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ex.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">constraints:
+  - name: near
+    distance: 15.6
+    layer: other_layer</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1172,7 +1247,7 @@ layers:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-11-14 06:05:58 UTC
+Last updated 2024-11-21 05:10:59 UTC
 </div>
 </div>
 </body>
