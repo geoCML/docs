@@ -5,13 +5,14 @@ image::Tabor-Logo.png["Tabor Logo", 250, 250]
 Tabor is a database modeling language for GIS based on YAML, but with additional syntax restrictions. The goal of Tabor is to allow GIS users to create and maintain complex database rules using plain-text configuration files. The following is an example of a Tabor configuration file for a PostGIS database:
 
 ```
-tabor: 0.2.0
+tabor: 0.3.0
 layers:
 
 - name: grass
   schema: public
   owner: geocml
   geometry: polygon
+  srid: 4326
   fields:
     - name: fid
       type: int
@@ -21,6 +22,7 @@ layers:
   schema: public
   owner: geocml
   geometry: point
+  srid: 4326
   fields:
   - name: fid
     type: int
@@ -41,6 +43,7 @@ layers:
   schema: public
   owner: geocml
   geometry: polyline
+  srid: 4326
   fields:
     - name: fid
       type: int
@@ -71,13 +74,52 @@ Tabor supports the following geometry types:
 
 If a layer has no geometry type, it may still be defined as a non-geometric table in the database.
 
+The spatial reference of each layer in your Tabor file can be defined with the `srid` field, followed by the SRID of your reference system.
 
 === Supported Field Types
 
-Tabor supports the following field types:
+Tabor supports the following primitive field types:
 
 - `int` -> for whole numbers
 - `numeric` -> for decimal numbers
 - `text` -> for unlimited length character strings
+- `boolean` -> for true or false values
+
+Tabor also supports arrays of primitive data. You can define an array as `type: <primitive> array`
 
 It is strongly recommended that you have a primary key (pk) on each of your layers. You can define a field as a primary key using `pk: true`.
+
+=== Data Constraints
+
+You can define complex business logic in your Tabor file with data constraints. Data constraints ensure that changes to your database table meets specific rules before they are committed to the database. You can choose to include as many data constraints on your layers as you need.
+
+Tabor supports the following data constraints:
+
+- `on` -> Checks that new features are at least partially within the boundaries of another layer (works with all geometry types)
+
+ex.
+```yaml
+constraints:
+  - name: on
+    layer: other_layer
+```
+
+- `length` -> Checks that new polyline features have either a minimum or maximum length
+
+ex.
+```yaml
+constraints:
+  - name: length
+    minimum: 0.5
+    maximum: 99.5 # You must include either a minimum or maximum value, but not both!
+```
+
+- `near` -> Checks that new features are placed within a given distance of another layer (works with all geometry type)
+
+ex.
+```yaml
+constraints:
+  - name: near
+    distance: 15.6
+    layer: other_layer
+```
