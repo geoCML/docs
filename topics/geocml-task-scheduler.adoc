@@ -30,8 +30,8 @@ You can create custom tasks in geoCML Task Scheduler.
 4. Return 0 if you want your task to run only once. Otherwise, your task will run according to its position in the schedule.
 5. Save your Python file.
 6. Open `schedule.py`
-7. Create a new Task object, instantiated with your new function and its execution frequency (in seconds).
-8. Start the task with `<your_task>.start()`
+7. Create a new Task object, instantiated with your new function.
+8. Schedule your task for execution with its execution frequency (in seconds)
 9. Rebuild the geocml-task-scheduler container and deploy
 
 Your new task is created, and it is scheduled for execution.
