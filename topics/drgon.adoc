@@ -2,7 +2,7 @@
 
 image::DRGON-Logo.png["DRGON Logo", 250, 250]
 
-DRGON (pronounced as 'Dragon') is a Distributed Registry of GISystems Over a Network. DRGON collects a registry geoCML deployments over the internet (or an intranet, if you prefer). Using a simple REST API, you can easily query DRGON to find the perfect dataset. A public registry is hosted at https://drgon.geocml.com, but you may also self host DRGON, depending on your needs.
+DRGON (pronounced as 'Dragon') is a Distributed Registry of GISystems Over a Network. DRGON collects a registry geoCML deployments over the internet (or an intranet, if you prefer). Using a simple REST API, you can easily query DRGON to find the perfect dataset. A public registry is hosted at https://drgon.geocml.com, but you may also self host a DRGON instance, depending on your needs.
 
 === Quickstart Guide
 
@@ -15,6 +15,18 @@ On your deployment's server machine, add the following values to your `.env` fil
 . GEOCML_DEPLOYMENT_HOST: the domain name of your hosted geoCML instance
 
 Rebuild your geoCML deployment, and restart your instance. After about a minute of up-time, geoCML Task Scheduler will ping DRGON and automatically register your deployment.
+
+=== Self Hosting a DRGON Instance
+
+You can host your own dedicated DRGON instance with a few simple steps:
+
+. Clone the geoCML source code from https://github.com/geocml/drgon[github.com/geocml/drgon]
+. Open a terminal and cd into the source code directory
+. Copy `.env.example` into a new file called `.env`
+. Update your `.env` to include your deployment specific configuration variables
+. Run `sh build.sh` to build DRGON service images on your machine.
+. Run `docker network create drgon-network`
+. Run `sh start.sh` to bring up the instance.
 
 === API Reference
 
