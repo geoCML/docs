@@ -496,6 +496,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_drgon">DRGON</a>
 <ul class="sectlevel2">
 <li><a href="#_quickstart_guide">Quickstart Guide</a></li>
+<li><a href="#_self_hosting_a_drgon_instance">Self Hosting a DRGON Instance</a></li>
 <li><a href="#_api_reference">API Reference</a></li>
 <li><a href="#_moderating_drgon">Moderating DRGON</a></li>
 </ul>
@@ -1163,7 +1164,7 @@ layers:
 </div>
 </div>
 <div class="paragraph">
-<p>DRGON (pronounced as 'Dragon') is a Distributed Registry of GISystems Over a Network. DRGON collects a registry geoCML deployments over the internet (or an intranet, if you prefer). Using a simple REST API, you can easily query DRGON to find the perfect dataset. A public registry is hosted at <a href="https://drgon.geocml.com" class="bare">https://drgon.geocml.com</a>, but you may also self host DRGON, depending on your needs.</p>
+<p>DRGON (pronounced as 'Dragon') is a Distributed Registry of GISystems Over a Network. DRGON collects a registry geoCML deployments over the internet (or an intranet, if you prefer). Using a simple REST API, you can easily query DRGON to find the perfect dataset. A public registry is hosted at <a href="https://drgon.geocml.com" class="bare">https://drgon.geocml.com</a>, but you may also self host a DRGON instance, depending on your needs.</p>
 </div>
 <div class="sect2">
 <h3 id="_quickstart_guide">Quickstart Guide</h3>
@@ -1188,6 +1189,37 @@ layers:
 </div>
 <div class="paragraph">
 <p>Rebuild your geoCML deployment, and restart your instance. After about a minute of up-time, geoCML Task Scheduler will ping DRGON and automatically register your deployment.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_self_hosting_a_drgon_instance">Self Hosting a DRGON Instance</h3>
+<div class="paragraph">
+<p>You can host your own dedicated DRGON instance with a few simple steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone the geoCML source code from <a href="https://github.com/geocml/drgon">github.com/geocml/drgon</a></p>
+</li>
+<li>
+<p>Open a terminal and cd into the source code directory</p>
+</li>
+<li>
+<p>Copy <code>.env.example</code> into a new file called <code>.env</code></p>
+</li>
+<li>
+<p>Update your <code>.env</code> to include your deployment specific configuration variables</p>
+</li>
+<li>
+<p>Run <code>sh build.sh</code> to build DRGON service images on your machine.</p>
+</li>
+<li>
+<p>Run <code>docker network create drgon-network</code></p>
+</li>
+<li>
+<p>Run <code>sh start.sh</code> to bring up the instance.</p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
@@ -1247,7 +1279,7 @@ layers:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-11-25 17:13:09 UTC
+Last updated 2024-12-07 19:36:04 UTC
 </div>
 </div>
 </body>
