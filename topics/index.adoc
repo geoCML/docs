@@ -8,6 +8,8 @@ ifndef::imagesdir[:imagesdir: ./img/]
 
 include::introduction.adoc[]
 
+include::quick-deployment-guide.adoc[]
+
 include::geocml-desktop.adoc[]
 
 include::geocml-postgres.adoc[]

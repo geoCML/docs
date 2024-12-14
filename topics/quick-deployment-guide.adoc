@@ -1,0 +1,18 @@
+== Quick deployment guide
+
+_Get up and running with geoCML in under 15 minutes!_
+
+geoCML deployments are multi-paradigm, offering a desktop, server, and web GIS experience with a single deployment. You may host your geoCML instance locally or in the cloud, depending on your needs.
+
+Before instantiating a geoCML deployment, you must have https://www.docker.com/[Docker] and https://docs.docker.com/compose/install/[Docker Compose] installed on the machine you want to host geoCML on. You do not need any additional GIS software installed on the host machine. Once you have satisfied these conditions, please follow the following steps to deploy your geoCML instance.
+
+. Clone the geoCML source code from https://github.com/geocml/geocml-base-deployment[github.com/geocml/geocml-base-deployment]
+. Open a terminal and cd into the source code directory
+. Copy `.env.example` into a new file called `.env`
+. Update your `.env` to include your deployment specific configuration variables
+. Run `sh build.sh` to build geoCML service images on your machine.
+. Run `docker network create geocml-network`
+. Run `sh start.sh` to bring up the instance.
+
+That's it! You can access geoCML Desktop via {deployment host URL}:10000 or geoCML Server Portal via {deployment host URL}:80 using a web browser. Further configuration steps for each of these services are discussed in later topics.
+
