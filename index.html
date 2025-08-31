@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
 <meta name="author" content="Tristan Damron, Sean Marquez">
-<title>geoCML v0.3.1 Documentation</title>
+<title>geoCML v4.0 Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book">
 <div id="header">
-<h1>geoCML v0.3.1 Documentation</h1>
+<h1>geoCML v4.0 Documentation</h1>
 <div class="details">
 <span id="author" class="author">Tristan Damron, Sean Marquez</span><br>
 </div>
@@ -452,7 +452,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_what_can_geocml_do">What can geoCML do?</a></li>
 <li><a href="#_what_can_geocml_not_do_out_of_the_box">What can geoCML <em>not</em> do out of the box?</a></li>
 <li><a href="#_quick_deployment_guide">Quick deployment guide</a></li>
-<li><a href="#_using_hosted_geocml_images_from_ghcr">Using hosted geoCML images from GHCR</a></li>
 </ul>
 </li>
 <li><a href="#_geocml_desktop">geoCML Desktop</a>
@@ -475,6 +474,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_configuring_geocml_server">Configuring geoCML Server</a></li>
 <li><a href="#_accessing_geocml_server_via_the_web">Accessing geoCML Server via the web</a></li>
 <li><a href="#_accessing_geocml_server_via_an_api">Accessing geoCML Server via an API</a></li>
+<li><a href="#_quantitative_analysis_using_dashboards">Quantitative Analysis Using Dashboards</a></li>
 </ul>
 </li>
 <li><a href="#_geocml_task_scheduler_gts">geoCML Task Scheduler (gTS)</a>
@@ -573,9 +573,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Backup domain values in a database</p>
 </li>
 <li>
-<p>Support for storing raster data in geocml-postgres</p>
-</li>
-<li>
 <p>MySQL support, SQL Server support, etc (base deployments only support PostgreSQL/PostGIS)</p>
 </li>
 </ul>
@@ -593,44 +590,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>geoCML deployments are multi-paradigm, offering a desktop, server, and web GIS experience with a single deployment. You may host your geoCML instance locally or in the cloud, depending on your needs.</p>
 </div>
 <div class="paragraph">
-<p>Before instantiating a geoCML deployment, you must have <a href="https://www.docker.com/">Docker</a> and <a href="https://docs.docker.com/compose/install/">Docker Compose</a> installed on the machine you want to host geoCML on. You do not need any additional GIS software installed on the host machine. Once you have satisfied these conditions, please follow the following steps to deploy your geoCML instance.</p>
+<p>Before instantiating a geoCML deployment, you must have git (<a href="https://git-scm.com/downloads" class="bare">https://git-scm.com/downloads</a>), Docker (<a href="https://www.docker.com/" class="bare">https://www.docker.com/</a>), and Docker Compose (<a href="https://docs.docker.com/compose/install/" class="bare">https://docs.docker.com/compose/install/</a>) installed on the machine you want to host geoCML on. You do not need any additional GIS software installed on the host machine. Once you have satisfied these conditions, please follow the following steps to deploy your geoCML instance.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
-<p>Clone the geoCML source code from <a href="https://github.com/geocml/geocml-base-deployment">github.com/geocml/geocml-base-deployment</a></p>
+<p>In your favorite terminal, run the following command: <code>sh &lt;(curl <a href="https://raw.githubusercontent.com/geocml/geocml-base-deployment/main/install.sh" class="bare">https://raw.githubusercontent.com/geocml/geocml-base-deployment/main/install.sh</a>)</code></p>
 </li>
 <li>
-<p>Open a terminal and cd into the source code directory</p>
+<p>Follow the on-screen prompts to configure and deploy a geoCML instance to your machine.</p>
 </li>
-<li>
-<p>Copy <code>.env.example</code> into a new file called <code>.env</code></p>
-</li>
-<li>
-<p>Update your <code>.env</code> to include your deployment specific configuration variables</p>
-</li>
-<li>
-<p>Run <code>sh build.sh</code> to build geoCML service images on your machine.</p>
-</li>
-<li>
-<p>Run <code>docker network create geocml-network</code></p>
-</li>
-<li>
-<p>Run <code>sh start.sh</code> to bring up the instance.</p>
-</li>
-</ol>
+</ul>
 </div>
 <div class="paragraph">
 <p>That&#8217;s it! You can access geoCML Desktop via {deployment host URL}:10000 or geoCML Server Portal via {deployment host URL}:80 using a web browser. Further configuration steps for each of these services are discussed in later topics.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_using_hosted_geocml_images_from_ghcr">Using hosted geoCML images from GHCR</h3>
-<div class="paragraph">
-<p>The geoCML development team hosts pre-built containers at our container registry on Github. These containers are a great way to demo geoCML, but please note that these services are <em>not production ready</em>, because they lack the required build arguments. If you want to use geoCML in production, please build your containers.</p>
-</div>
-<div class="paragraph">
-<p>Please keep in mind that the GEOCML_DESKTOP_PASSWORD variable in the <code>.env</code> file must be set to access your deployment via geoCML Desktop.</p>
 </div>
 </div>
 </div>
@@ -644,7 +617,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="paragraph">
-<p>geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with <a href="https://www.qgis.org/en/site/">QGIS</a>, a best-in-class open-source desktop GIS application. geoCML Desktop is password protected. You must set a password within your deployment&#8217;s <code>.env</code> file.</p>
+<p>geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with <a href="https://www.qgis.org/en/site/">QGIS</a>, a best-in-class open-source</p>
 </div>
 <div class="sect2">
 <h3 id="_connecting_to_geocml_desktop">Connecting to geoCML Desktop</h3>
@@ -751,35 +724,6 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>The default credentials for accessing your database are:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Username: geocml</p>
-</li>
-<li>
-<p>Password: geocml</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>geoCML Postgres also configures an admin user for your data store. The default credentials for accessing your data store as an admin are:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Username: postgres</p>
-</li>
-<li>
-<p>Password: admin</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You can change the default password for both the geocml and postgres users in your deployment&#8217;s <code>.env</code> file. Note that these are build-time arguments; you must rebuild your containers to commit these changes.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_current_limitations_of_the_geocml_postgres_service">Current limitations of the geoCML Postgres service</h3>
@@ -878,6 +822,18 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <h3 id="_accessing_geocml_server_via_an_api">Accessing geoCML Server via an API</h3>
 <div class="paragraph">
 <p>geoCML Server exposes all API functionality for QGIS Server via cfcgi and Apache. Learn more about QGIS Server here: <a href="https://docs.qgis.org/3.34/en/docs/server_manual/index.html" class="bare">https://docs.qgis.org/3.34/en/docs/server_manual/index.html</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quantitative_analysis_using_dashboards">Quantitative Analysis Using Dashboards</h3>
+<div class="paragraph">
+<p>geoCML Server Portal allows you to create custom dashboards, allowing you to perform quantitative analysis on your GIS data.</p>
+</div>
+<div class="paragraph">
+<p>The following dashboard widgets are currently supported:
+- Raw Counts
+- Bar Chart
+- Pie Chart</p>
 </div>
 </div>
 </div>
@@ -1279,7 +1235,7 @@ layers:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-12-07 19:36:04 UTC
+Last updated 2025-08-31 02:56:59 UTC
 </div>
 </div>
 </body>
