@@ -2,7 +2,7 @@
 
 image::geoCML-Desktop-Logo.png["geoCML Desktop Logo", 250, 250]
 
-geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with https://www.qgis.org/en/site/[QGIS], a best-in-class open-source desktop GIS application. geoCML Desktop is password protected. You must set a password within your deployment's `.env` file.
+geoCML Desktop is the primary access point for your geoCML deployment. geoCML Desktop provides you with a desktop environment allowing you to prepare, visualize, and analyze your GIS data. The geocml-desktop container is based on Ubuntu Linux and comes installed with the XPRA, allowing you to view running applications in a web browser. geoCML Desktop comes preinstalled with https://www.qgis.org/en/site/[QGIS], a best-in-class open-source 
 
 === Connecting to geoCML Desktop
 

@@ -23,18 +23,6 @@ geoCML Postgres creates a database named geocml_db, which is the primary datasto
 - via geoCML Desktop and QGIS (over the internal geocml-network)
 - via a PostgreSQL data explorer (over port {deployment host URL}:5432)
 
-The default credentials for accessing your database are:
-
-- Username: geocml
-- Password: geocml
-
-geoCML Postgres also configures an admin user for your data store. The default credentials for accessing your data store as an admin are:
-
-- Username: postgres
-- Password: admin
-
-You can change the default password for both the geocml and postgres users in your deployment's `.env` file. Note that these are build-time arguments; you must rebuild your containers to commit these changes.
-
 === Current limitations of the geoCML Postgres service
 
 In geoCML v0.3.0, there are known limitations with the geoCML Postgres service. Currently, geoCML Postgres does not support the following data:

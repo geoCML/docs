@@ -37,3 +37,12 @@ geoCML Server Portal features:
 
 geoCML Server exposes all API functionality for QGIS Server via cfcgi and Apache. Learn more about QGIS Server here: https://docs.qgis.org/3.34/en/docs/server_manual/index.html
 
+
+=== Quantitative Analysis Using Dashboards
+
+geoCML Server Portal allows you to create custom dashboards, allowing you to perform quantitative analysis on your GIS data.
+
+The following dashboard widgets are currently supported:
+- Raw Counts
+- Bar Chart
+- Pie Chart
