@@ -677,6 +677,69 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <p>geoCML Desktop will automatically open geocml-project.qgz in QGIS when you connect to the XPRA service. geocml-project.qgz is the central project file for your entire geoCML deployment. By design, all of your GIS work must be done in this file.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_typography_and_fonts">Typography and Fonts</h4>
+<div class="paragraph">
+<p>geoCML Desktop comes with the following fonts installed by default:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Baskerville</p>
+</li>
+<li>
+<p>EB Garamond</p>
+</li>
+<li>
+<p>Noto Serif</p>
+</li>
+<li>
+<p>Open Sans</p>
+</li>
+<li>
+<p>Oswald</p>
+</li>
+<li>
+<p>Roboto</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can install custom fonts to geoCML Desktop to support your needs when creating maps. Follow these steps to add new fonts:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Collect your custom font as a .ttf file.</p>
+</li>
+<li>
+<p>Copy your font to the <code>Fonts/</code> directory in the persistence layer.</p>
+</li>
+<li>
+<p>gTS will automatically refresh your font cache every minute. After a minute has passed, restart QGIS.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installing_qgis_plugins">Installing QGIS Plugins</h4>
+<div class="paragraph">
+<p>You can add workflow specific QGIS plugins to geoCML Desktop using the <code>qgis-plugin-manager</code> command line utility. Follow these steps to add new QGIS plugins to your geoCML Desktop instance:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In a text editor, open <code>build-resources/geocml-desktop/entrypoint.sh</code>.</p>
+</li>
+<li>
+<p>Add the following line to the <code>entrypoint.sh</code> file: <code>qgis-plugin-manager install &lt;NAME OF PLUGIN&gt;</code>.</p>
+</li>
+<li>
+<p>Run the install script to rebuild your containers.</p>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1235,7 +1298,7 @@ layers:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-31 02:56:59 UTC
+Last updated 2025-09-01 17:12:02 UTC
 </div>
 </div>
 </body>
