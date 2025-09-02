@@ -88,6 +88,7 @@ Tabor supports the following primitive field types:
 Tabor also supports arrays of primitive data. You can define an array as `type: <primitive> array`.
 
 Tabor has support for several temporal data fields:
+
 - `date` -> for date values
 - `time` -> for time values
 - `timestamp` -> for timestamp values
@@ -152,5 +153,5 @@ layers:
       type: _confidence
 ```
 
-This example creates a domain value named `_confidence` which constrains a field to the following values: High, Medium, and Low. Note that the domain value begins with a `_`--this is a requirement for domain values in Tabor. You can use the domain value as a field type when defining a layer.
+This example creates a domain value named `_confidence` which constrains a field to the following values: High, Medium, and Low. Note that the domain value begins with a `_` --this is a requirement for domain values in Tabor. You can use the domain value as a field type when defining a layer.
 
