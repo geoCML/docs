@@ -491,6 +491,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_supported_geometry_types">Supported Geometry Types</a></li>
 <li><a href="#_supported_field_types">Supported Field Types</a></li>
 <li><a href="#_data_constraints">Data Constraints</a></li>
+<li><a href="#_domain_values">Domain Values</a></li>
 </ul>
 </li>
 <li><a href="#_drgon">DRGON</a>
@@ -991,7 +992,7 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>tabor: 0.3.0
+<pre class="highlight"><code>tabor: 4.0
 layers:
 
 - name: grass
@@ -1104,7 +1105,13 @@ layers:
 </ul>
 </div>
 <div class="paragraph">
-<p>Tabor also supports arrays of primitive data. You can define an array as <code>type: &lt;primitive&gt; array</code></p>
+<p>Tabor also supports arrays of primitive data. You can define an array as <code>type: &lt;primitive&gt; array</code>.</p>
+</div>
+<div class="paragraph">
+<p>Tabor has support for several temporal data fields:
+- <code>date</code> &#8594; for date values
+- <code>time</code> &#8594; for time values
+- <code>timestamp</code> &#8594; for timestamp values</p>
 </div>
 <div class="paragraph">
 <p>It is strongly recommended that you have a primary key (pk) on each of your layers. You can define a field as a primary key using <code>pk: true</code>.</p>
@@ -1170,6 +1177,37 @@ layers:
     distance: 15.6
     layer: other_layer</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_domain_values">Domain Values</h3>
+<div class="paragraph">
+<p>Domain values are commonly used in GIS databases to apply specific constraints on fields. Tabor allows you to create domain values for use in your database schema.</p>
+</div>
+<div class="paragraph">
+<p>ex.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">domains:
+- name: _confidence
+  type: text
+  values:
+  - High
+  - Medium
+  - Low
+
+layers:
+  - name: table_with_domain
+    schema: public
+    owner: postgres
+    fields:
+    - name: level_of_confidence
+      type: _confidence</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example creates a domain value named <code><em>confidence</code> which constrains a field to the following values: High, Medium, and Low. Note that the domain value begins with a <code></em></code>--this is a requirement for domain values in Tabor. You can use the domain value as a field type when defining a layer.</p>
 </div>
 </div>
 </div>
@@ -1298,7 +1336,7 @@ layers:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-09-01 17:12:02 UTC
+Last updated 2025-09-02 19:51:01 UTC
 </div>
 </div>
 </body>
