@@ -5,7 +5,7 @@ image::Tabor-Logo.png["Tabor Logo", 250, 250]
 Tabor is a database modeling language for GIS based on YAML, but with additional syntax restrictions. The goal of Tabor is to allow GIS users to create and maintain complex database rules using plain-text configuration files. The following is an example of a Tabor configuration file for a PostGIS database:
 
 ```
-tabor: 0.3.0
+tabor: 4.0
 layers:
 
 - name: grass
@@ -85,7 +85,12 @@ Tabor supports the following primitive field types:
 - `text` -> for unlimited length character strings
 - `boolean` -> for true or false values
 
-Tabor also supports arrays of primitive data. You can define an array as `type: <primitive> array`
+Tabor also supports arrays of primitive data. You can define an array as `type: <primitive> array`.
+
+Tabor has support for several temporal data fields:
+- `date` -> for date values
+- `time` -> for time values
+- `timestamp` -> for timestamp values
 
 It is strongly recommended that you have a primary key (pk) on each of your layers. You can define a field as a primary key using `pk: true`.
 
@@ -123,3 +128,29 @@ constraints:
     distance: 15.6
     layer: other_layer
 ```
+
+=== Domain Values
+
+Domain values are commonly used in GIS databases to apply specific constraints on fields. Tabor allows you to create domain values for use in your database schema.
+
+ex.
+```yaml
+domains:
+- name: _confidence
+  type: text
+  values:
+  - High
+  - Medium
+  - Low
+
+layers:
+  - name: table_with_domain
+    schema: public
+    owner: postgres
+    fields:
+    - name: level_of_confidence
+      type: _confidence
+```
+
+This example creates a domain value named `_confidence` which constrains a field to the following values: High, Medium, and Low. Note that the domain value begins with a `_`--this is a requirement for domain values in Tabor. You can use the domain value as a field type when defining a layer.
+
