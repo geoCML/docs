@@ -41,7 +41,7 @@ The persistence layer is a _mutible and persistent_ directory shared between the
 geoCML Desktop will automatically open geocml-project.qgz in QGIS when you connect to the XPRA service. geocml-project.qgz is the central project file for your entire geoCML deployment. By design, all of your GIS work must be done in this file.
 
 
-==== Typography and Fonts
+=== Typography and Fonts
 
 geoCML Desktop comes with the following fonts installed by default:
 
@@ -59,7 +59,7 @@ You can install custom fonts to geoCML Desktop to support your needs when creati
 3. gTS will automatically refresh your font cache every minute. After a minute has passed, restart QGIS.
 
 
-==== Installing QGIS Plugins
+=== Installing QGIS Plugins
 
 You can add workflow specific QGIS plugins to geoCML Desktop using the `qgis-plugin-manager` command line utility. Follow these steps to add new QGIS plugins to your geoCML Desktop instance:
 
