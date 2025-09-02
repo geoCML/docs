@@ -460,6 +460,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_using_geocml_desktop">Using geoCML Desktop</a></li>
 <li><a href="#_configuring_geocml_desktop">Configuring geoCML Desktop</a></li>
 <li><a href="#_understanding_the_persistence_layer">Understanding the persistence layer</a></li>
+<li><a href="#_typography_and_fonts">Typography and Fonts</a></li>
+<li><a href="#_installing_qgis_plugins">Installing QGIS Plugins</a></li>
 </ul>
 </li>
 <li><a href="#_geocml_postgres">geoCML Postgres</a>
@@ -678,8 +680,9 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <p>geoCML Desktop will automatically open geocml-project.qgz in QGIS when you connect to the XPRA service. geocml-project.qgz is the central project file for your entire geoCML deployment. By design, all of your GIS work must be done in this file.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_typography_and_fonts">Typography and Fonts</h4>
+</div>
+<div class="sect2">
+<h3 id="_typography_and_fonts">Typography and Fonts</h3>
 <div class="paragraph">
 <p>geoCML Desktop comes with the following fonts installed by default:</p>
 </div>
@@ -722,8 +725,8 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_installing_qgis_plugins">Installing QGIS Plugins</h4>
+<div class="sect2">
+<h3 id="_installing_qgis_plugins">Installing QGIS Plugins</h3>
 <div class="paragraph">
 <p>You can add workflow specific QGIS plugins to geoCML Desktop using the <code>qgis-plugin-manager</code> command line utility. Follow these steps to add new QGIS plugins to your geoCML Desktop instance:</p>
 </div>
@@ -739,7 +742,6 @@ geoCML Destkop has a two step configuration process: Dockerfile configuration, a
 <p>Run the install script to rebuild your containers.</p>
 </li>
 </ol>
-</div>
 </div>
 </div>
 </div>
@@ -1108,10 +1110,20 @@ layers:
 <p>Tabor also supports arrays of primitive data. You can define an array as <code>type: &lt;primitive&gt; array</code>.</p>
 </div>
 <div class="paragraph">
-<p>Tabor has support for several temporal data fields:
-- <code>date</code> &#8594; for date values
-- <code>time</code> &#8594; for time values
-- <code>timestamp</code> &#8594; for timestamp values</p>
+<p>Tabor has support for several temporal data fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>date</code> &#8594; for date values</p>
+</li>
+<li>
+<p><code>time</code> &#8594; for time values</p>
+</li>
+<li>
+<p><code>timestamp</code> &#8594; for timestamp values</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>It is strongly recommended that you have a primary key (pk) on each of your layers. You can define a field as a primary key using <code>pk: true</code>.</p>
@@ -1207,7 +1219,7 @@ layers:
 </div>
 </div>
 <div class="paragraph">
-<p>This example creates a domain value named <code><em>confidence</code> which constrains a field to the following values: High, Medium, and Low. Note that the domain value begins with a <code></em></code>--this is a requirement for domain values in Tabor. You can use the domain value as a field type when defining a layer.</p>
+<p>This example creates a domain value named <code><em>confidence</code> which constrains a field to the following values: High, Medium, and Low. Note that the domain value begins with a <code></em></code> --this is a requirement for domain values in Tabor. You can use the domain value as a field type when defining a layer.</p>
 </div>
 </div>
 </div>
@@ -1336,7 +1348,7 @@ layers:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-09-02 19:51:01 UTC
+Last updated 2025-09-02 20:54:00 UTC
 </div>
 </div>
 </body>
